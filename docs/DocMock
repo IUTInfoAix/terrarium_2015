@@ -1,0 +1,116 @@
+
+3 questions : Ecriture des tests pour les mocks
+Vérifier qu'une fonction a bien été apellée et Simuler la réussite d'une fonction
+Vérification des paramétres d'appel d'une fonction
+Créer des comparateurs de classe
+Les paramètres de sortie
+3 questions : Ecriture des tests pour les mocks
+
+Qu'est ce qui va être appelé? avec quel paramètre?
+Qu'est ce que ça va me retourner?
+
+
+Vérifier qu'une fonction a bien été apellée et Simuler la réussite d'une fonction
+
+#include "CppUTest/TestHarness.h"
+#include "CppUTestExt/MockSupport.h" 
+//Fichier include obligatoire pour érire des Mocks
+
+TEST_GROUP(MockDocumentation) //Fonction obligatoire pour éviter les fuites mémoires
+{
+    void teardown()
+    {
+        mock().clear();
+    }
+};
+
+void productionCode()
+{
+    mock().actualCall("productionCode");
+//Ici on dit à la fonction qu'elle s'appelle "productionCode" et que ce qu'elle devais faire a bien été fait, le programme continue donc en pensant que "productionCode" a bien été executé et a réussis.
+}
+//Ici on vas écrire notre premier test de vérification d'appel de fonction.
+TEST(MockDocumentation, SimpleScenario)
+{
+    mock().expectOneCall("productionCode");
+/*En écrivant cette ligne, on explique à cpputest que l'ont attend qu'il appelle au moins une fois la fonction en paramère  "productionCode" */
+    productionCode();
+/* On appelle en suite, la fonction */
+    mock().checkExpectations();
+/*Par la suite on pose la question à Cpputest, dit moi le test c'est bien passé? la fonction à telle été apellé ? Si oui , le test passe ! */
+}
+Nb: On peut vérifier par exemple qu'on est bien passé dans un "if" 
+
+Vérification des paramétres d'appel d'une fonction
+
+mock().expectOneCall("function").withParameterOfType("myType", "parameterName", object);
+Ici on vérifie si le type passé en paramétre de fonction correspond bien à celui que l'on attendait.
+Note: On peut aussi passer un objet en paramétre mais c'est facultatif
+
+
+Créer des comparateurs de classe 
+
+class MyTypeComparator : public MockNamedValueComparator
+{
+public:
+    virtual bool isEqual(void* object1, void* object2)
+    {
+        return object1 == object2;
+    }
+    virtual SimpleString valueToString(void* object)
+    {
+        return StringFrom(object);
+    }
+};
+
+//Ici on créer une classe comparateur qui hérite de MockNamedValueComparator (Obligatoire)
+Celle ci permet de créer des tests sur des classes "faites maison" comme par exemple des test d'égalité ou de conversion de type
+
+MyTypeComparator comparator; // Ici on instancie un comparator 
+mock().installComparator("myType", comparator); // On met en place le comparateur de test
+Note on peut supprimer les comparateurs avec : mock().removeAllComparators();
+Les paramètres de sortie
+
+int outputValue = 4;
+mock().expectOneCall("Foo").withOutputParameterReturning("bar", &outputValue, sizeof(outputValue));
+
+//Ici, on vérifie que le paramètre  de  "bar" de la fonction Foo  soit bien égal à outputValue (valeur et taille)
+
+void Foo(int *bar)
+{
+    mock().actualCall("foo").withOutputParameter("bar", bar);
+}
+//Dans ce cas, on simule la réussite de Foo et on simule que la valeur du pointeur a bien été modifié, l'utilitaire de test va alors récupérer la valeur attendue plus haut (4) et la mettre dans bar et contienne bar
+
+
+
+//Des surcharges de  withOutputParameterReturning existent pour char, int, unsigned, long, unsigned long, et double, le paramètre précisant la taille peut disparaitre :
+mock().expectOneCall("Foo").withOutputParameterReturning("bar", &charOutputValue);
+
+
+mock().expectOneCall("function").andReturnValue(10);
+// Permet en plus de déclarer l'attente d'une fonction, de préciser la valeur de retour lors de la simulation.
+//Cela est mis en place grâce à :
+
+int function () {
+    return mock().actualCall("function").returnIntValue();
+}
+
+//On peut également ignorer les autres appels d'une fonction avec :
+mock().expectOneCall("foo");
+mock().ignoreOtherCalls();
+//Ici, on précise que seul le premier appel de foo et ignore les autres
+
+mock().disable();
+doSomethingThatWouldOtherwiseBlowUpTheMockingFramework();
+mock().enable();
+// On peut désactiver mock puis le réactiver
+
+
+
+
+
+
+L
+
+Mock renvoie un global Mock support
