@@ -1,0 +1,20 @@
+struct ma_conf = pwm_info_s(50, x)
+// avec x la valeur modulé selon les caractéristique du servo-moteur
+
+
+PWMIOC_SETCARACTERISTICS(ma_conf)
+PWMIOC_START
+
+CONFIG_PWM_PULSECOUNT(y)
+// avec y le nombre de pulsation a envoyer, 0 etant la valeur pour ne pas compter
+
+PWMIOC_STOP
+
+
+
+
+/* NuttX PWM ioctl definitions (see nuttx/pwm.h) ****************************/
+
+#define _PWMIOCVALID(c)   (_IOC_TYPE(c)==_PWMIOCBASE)
+#define _PWMIOC(nr)       _IOC(_PWMIOCBASE,nr)
+
