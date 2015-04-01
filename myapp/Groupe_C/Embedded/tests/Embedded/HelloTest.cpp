@@ -51,3 +51,12 @@ TEST(Embedded, CountIntens2)
 	DOUBLES_EQUAL(0.0002, TensToIntens(0.7), DELTA);
 }
 
+TEST(Embedded, CountLx1)
+{
+	DOUBLES_EQUAL(20, IntensToLx(10), DELTA)
+}
+
+TEST(Embedded, CountLx2)
+{
+	DOUBLES_EQUAL(200, IntensToLx(100), DELTA)
+}

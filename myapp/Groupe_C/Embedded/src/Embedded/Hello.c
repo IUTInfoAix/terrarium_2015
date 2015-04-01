@@ -9,3 +9,8 @@ double TensToIntens (double Tens)
 {
 	return Tens / 3500;
 }
+
+double IntensToLx (double Intens)
+{
+	return Intens * 2;
+}
