@@ -14,3 +14,8 @@ double IntensToLx (double Intens)
 {
 	return Intens * 2;
 }
+
+double BitToLx (int bit)
+{
+	return IntensToLx(TensToIntens(BitToTens(bit)));
+}
