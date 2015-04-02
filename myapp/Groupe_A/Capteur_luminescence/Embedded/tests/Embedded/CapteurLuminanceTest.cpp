@@ -3,6 +3,7 @@
 
 extern "C"
 {
+  #include <stdio.h>
   #include "CapteurLuminance.h"
 }
 
