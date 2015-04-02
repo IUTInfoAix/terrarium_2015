@@ -1,7 +1,12 @@
+#include <unistd.h>
 
-void wifi_list()
+void wifi_list(FAR struct nsh_vtbl_s *vtbl)
 {
-
+	char * str = "AT+CWLAP";
+	int fd = open ("/dev/ttyS0");
+	write (fd, str, 8);
+	str = read (fr, str, 2000);
+	nsh_output(vtbl, str);
 }
 
 void wifi_connect()
@@ -23,7 +28,7 @@ void cmd_wifi(FAR struct nsh_vtbl_s *vtbl, int argc, char **argv)
 {
 	if (argv[1] == "list")
 	{
-
+		wifi_list(vtbl);
 	}
 	else if (argv[1] == "connect")
 	{
