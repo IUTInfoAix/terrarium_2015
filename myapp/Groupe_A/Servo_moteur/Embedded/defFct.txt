@@ -32,3 +32,4 @@ paramettre :
 	- variable globale d'erreur
 retour :
 	- variable globale d'erreur
+
