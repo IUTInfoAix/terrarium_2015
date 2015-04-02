@@ -12,7 +12,7 @@ add_library(imp_cpputest STATIC IMPORTED)
 set_property(TARGET imp_cpputest PROPERTY
              IMPORTED_LOCATION $ENV{CPPUTEST_HOME}/libCppUTest.a)
 
-add_library(EmbeddedTest ./Embedded/HelloTest.cpp)
+add_library(EmbeddedTest ./Embedded/CapteurLuminanceTest.cpp)
 
 add_executable(RunAllTests RunAllTests.cpp)
 target_link_libraries(RunAllTests imp_cpputest EmbeddedTest Embedded)

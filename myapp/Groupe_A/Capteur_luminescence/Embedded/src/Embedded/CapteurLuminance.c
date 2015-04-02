@@ -1,4 +1,4 @@
-#include "Hello.h"
+#include "CapteurLuminance.h"
 
 double BitToTens(int bit) 
 {
