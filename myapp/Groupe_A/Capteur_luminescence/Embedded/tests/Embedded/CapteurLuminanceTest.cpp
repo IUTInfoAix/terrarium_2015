@@ -3,7 +3,7 @@
 
 extern "C"
 {
-  #include "Hello.h"
+  #include "CapteurLuminance.h"
 }
 
 #define DELTA 0.01
@@ -18,18 +18,6 @@ TEST_GROUP(Embedded)
   {
   }
 };
-
-/*
-**	Appliquer U=RI
-*	On cherche I donc I = U/R
-* 	R est une valeur fixe 3500  
-*	Tu vas voir dans la doc du TEMT6000
-*	Retrouver une fonction qui en fonction de l'amperage renvoie une valeur en LUX
-*
-*
-*/
-
-
 
 TEST(Embedded, CountTens1)
 {
