@@ -48,3 +48,10 @@ TEST(Embedded, CountLx2)
 {
 	DOUBLES_EQUAL(200, IntensToLx(100), DELTA)
 }
+
+
+TEST(Embedded, TestAll)
+{
+  for (int i = 0; i < 4095; i = i + 10)
+    DOUBLES_EQUAL(i * 5.02232143 * 0.0000001, BitToLx(i), DELTA)
+}

@@ -4,5 +4,6 @@
 double BitToTens(int bit);
 double TensToIntens (double Tens);
 double IntensToLx (double Intens);
+double BitToLx (int bit);
 
 #endif
