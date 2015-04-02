@@ -1,0 +1,34 @@
+Une fonction générale type main pour appeler l'usage de notre code :
+paramettre
+	-la position requise (à définir si on créer des noms de positions style ferme demi-ouvert ouvert ou bien demander une position précise en degres de 0 a 180°)
+en retour 
+	- 0 si cela c'est bien passer 
+	- -1 si les parametres ne sont pas bons
+	- -2 une erreur fatal
+	- -3 demande récurente de mouvement (4 fois le même appel) erreur critique demandant la verif du Servo_moteur par un technicien
+
+
+
+des micros_fonctions interne au programe :
+
+fonction d'inicialisation des registres 
+paramettre : 
+	-duty (a determiner ce que c'est)
+	-freq (normalement 50)
+	-duration (notre variable allant de 0.75 a 2.25
+	-count (optionnelement si on laisse l'envoie en auto et continue)
+retour :
+	- 0 ok
+	- -1 erreur
+
+fonction start envoie 
+paramettre :
+
+retour :
+	
+
+fonction verif etat Servo_moteur cas problème
+paramettre :
+	- variable globale d'erreur
+retour :
+	- variable globale d'erreur
