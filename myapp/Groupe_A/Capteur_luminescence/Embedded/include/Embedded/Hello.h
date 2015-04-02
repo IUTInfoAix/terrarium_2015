@@ -1,6 +1,8 @@
 #ifndef EMBEDDED_HELLO_H
 #define EMBEDDED_HELLO_H
 
-int hello();
+double BitToTens(int bit);
+double TensToIntens (double Tens);
+double IntensToLx (double Intens);
 
 #endif

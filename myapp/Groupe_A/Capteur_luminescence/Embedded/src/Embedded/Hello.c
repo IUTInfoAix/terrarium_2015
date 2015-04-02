@@ -1,6 +1,16 @@
 #include "Hello.h"
 
-int hello () 
+double BitToTens(int bit) 
 {
-	return 1;
+	return bit * 3.6 / 4096;
+}
+
+double TensToIntens (double Tens) 
+{
+	return Tens / 3500;
+}
+
+double IntensToLx (double Intens)
+{
+	return Intens * 2;
 }
