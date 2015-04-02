@@ -3,7 +3,7 @@
 
 extern "C"
 {
-  #include "Hello.h"
+  #include "ServoMoteur.h"
 }
 
 TEST_GROUP(Embedded)
