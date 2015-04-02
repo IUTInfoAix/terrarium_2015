@@ -1,17 +1,30 @@
-#include <unistd.h>
+//#include <unistd.h>
+#include "bouchonWifi.h"
+#include "string.h"
 
 void wifi_list(FAR struct nsh_vtbl_s *vtbl)
 {
-	char * str = "AT+CWLAP";
+	char *str = "AT+CWLAP";
 	int fd = open ("/dev/ttyS0");
-	write (fd, str, 8);
-	str = read (fr, str, 2000);
-	nsh_output(vtbl, str);
+	write (fd, str, strlen(str));
+	while (true)
+	{
+		read (fd, str, 256);
+		if (str == "OK") break;
+		nsh_output(vtbl, str);
+		nsh_output(vtbl, "\n");
+	}
 }
 
-void wifi_connect()
+void wifi_connect(FAR struct nsh_vtbl_s *vtbl, char *name, char *pass)
 {
-
+	char * str = "AT+CWJAP=\"";
+	strcat (str, name);
+	strcat (str, "\",\"");
+	strcat (str, pass);
+	strcat (str, "\"");
+	int fd = open ("/dev/ttyS0");
+	write (fd, str, strlen(str));
 }
 
 void wifi_status()
