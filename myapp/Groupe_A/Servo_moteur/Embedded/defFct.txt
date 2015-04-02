@@ -5,7 +5,7 @@ en retour
 	- 0 si cela c'est bien passer 
 	- -1 si les parametres ne sont pas bons
 	- -2 une erreur fatal
-	- -3 demande récurente de mouvement (4 fois le même appel) erreur critique demandant la verif du Servo_moteur par un technicien
+
 
 
 
@@ -27,9 +27,4 @@ paramettre :
 retour :
 	
 
-fonction verif etat Servo_moteur cas problème
-paramettre :
-	- variable globale d'erreur
-retour :
-	- variable globale d'erreur
 

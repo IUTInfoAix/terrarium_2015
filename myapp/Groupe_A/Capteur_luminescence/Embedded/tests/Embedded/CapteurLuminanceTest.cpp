@@ -3,6 +3,8 @@
 
 extern "C"
 {
+  #include <stdio.h>
+  #include <unistd.h>
   #include "CapteurLuminance.h"
 }
 
@@ -52,6 +54,19 @@ TEST(Embedded, CountLx2)
 
 TEST(Embedded, TestAll)
 {
-  for (int i = 0; i < 4095; i = i + 10)
-    DOUBLES_EQUAL(i * 5.02232143 * 0.0000001, BitToLx(i), DELTA)
+  for (int i = 0; i < 15; ++i) {
+    sleep(1);
+    /*
+    fd = open(dev/adc/)
+    int val = 0;
+    result = read (fd, &val, sizeof(val));
+    ioctl(); // appel systeme sur les registres de la carte avec parametrage
+
+    */
+    int nombre;
+    srand(time(NULL));
+    nombre = (int)rand() % 4095;
+    
+    DOUBLES_EQUAL(nombre * 5.02232143 * 0.0000001, BitToLx(nombre), DELTA)
+  }
 }
