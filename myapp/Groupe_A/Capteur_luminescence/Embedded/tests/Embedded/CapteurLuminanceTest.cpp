@@ -52,7 +52,7 @@ TEST(Embedded, CountLx2)
 
 TEST(Embedded, TestAll)
 {
-  for (int i = 0; i < 4095; ++i) {
+  for (int i = 0; i < 15; ++i) {
     sleep(1);
     /*
     fd = open(dev/adc/)
@@ -63,7 +63,7 @@ TEST(Embedded, TestAll)
     */
     int nombre;
     srand(time(NULL));
-    nombre = (int)rand() % 4096;
+    nombre = (int)rand() % 4095;
     
     DOUBLES_EQUAL(nombre * 5.02232143 * 0.0000001, BitToLx(nombre), DELTA)
   }
