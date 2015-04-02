@@ -17,5 +17,6 @@ double IntensToLx (double Intens)
 
 double BitToLx (int bit)
 {
+	if (bit < 0 || bit > 4095) return -1;
 	return IntensToLx(TensToIntens(BitToTens(bit)));
 }
