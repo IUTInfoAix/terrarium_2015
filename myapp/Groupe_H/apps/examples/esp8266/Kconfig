@@ -1,0 +1,14 @@
+#
+# For a description of the syntax of this configuration file,
+# see misc/tools/kconfig-language.txt.
+#
+
+config EXAMPLES_ESP8266
+	bool "ESP8266 application"
+	default n
+	---help---
+		Enable the \"esp8266\" example
+
+if EXAMPLES_ESP8266
+endif
+
