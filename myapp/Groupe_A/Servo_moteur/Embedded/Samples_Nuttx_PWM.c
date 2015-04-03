@@ -157,7 +157,7 @@ static void pwm_help(FAR struct pwm_state_s *pwm)
   printf("\n\"sticky\" OPTIONS include:\n");
   printf("  [-p devpath] selects the PWM device.  "
         "Default: %s Current: %s\n",
-        CONFIG_EXAMPLES_PWM_DEVPATH, pwm->devpath ? pwm->devpath : "NONE");					--/!\ a Garder /!\--
+        CONFIG_EXAMPLES_PWM_DEVPATH, pwm->devpath ? pwm->devpath : "NONE");					
   printf("  [-f frequency] selects the pulse frequency.  "
         "Default: %d Hz Current: %u Hz\n",
         CONFIG_EXAMPLES_PWM_FREQUENCY, pwm->freq);
@@ -179,7 +179,7 @@ static void pwm_help(FAR struct pwm_state_s *pwm)
  * Name: arg_string
  ****************************************************************************/
 
-static int arg_string(FAR char **arg, FAR char **value)
+static int arg_string(FAR char **arg, FAR char **value)				--/!\ a Garder /!\--
 {
   FAR char *ptr = *arg;
 
@@ -196,10 +196,10 @@ static int arg_string(FAR char **arg, FAR char **value)
 }
 
 /****************************************************************************
- * Name: arg_decimal
+ * Name: arg_decimal								
  ****************************************************************************/
 
-static int arg_decimal(FAR char **arg, FAR long *value)
+static int arg_decimal(FAR char **arg, FAR long *value)							--/!\ a Garder /!\--
 {
   FAR char *string;
   int ret;
@@ -210,7 +210,7 @@ static int arg_decimal(FAR char **arg, FAR long *value)
 }
 
 /****************************************************************************
- * Name: parse_args
+ * Name: parse_args  REMY MOCK 
  ****************************************************************************/
 
 static void parse_args(FAR struct pwm_state_s *pwm, int argc, FAR char **argv) 				--/!\ a Garder /!\-- mais à comprendre
@@ -391,7 +391,7 @@ int pwm_main(int argc, char *argv[])
    * mode, this call will block if the count value is greater than zero.
    */
 
-  ret = ioctl(fd, PWMIOC_START, 0);
+  ret = ioctl(fd, PWMIOC_START, 0);								--/!\ a Garder /!\--
   if (ret < 0)
     {
       printf("pwm_main: ioctl(PWMIOC_START) failed: %d\n", errno);
@@ -414,7 +414,7 @@ int pwm_main(int argc, char *argv[])
 
       printf("pwm_main: stopping output\n");
 
-      ret = ioctl(fd, PWMIOC_STOP, 0);
+      ret = ioctl(fd, PWMIOC_STOP, 0);							--/!\ a Garder /!\--
       if (ret < 0)
         {
           printf("pwm_main: ioctl(PWMIOC_STOP) failed: %d\n", errno);
@@ -422,13 +422,13 @@ int pwm_main(int argc, char *argv[])
         }
     }
 
- close(fd);
+ close(fd);							--/!\ a Garder /!\--
  fflush(stdout);
- return OK;
+ return OK;														
 
 errout_with_dev:
   close(fd);
 errout:
   fflush(stdout);
   return ERROR;
-}
+}									--/!\ a Garder /!\--
