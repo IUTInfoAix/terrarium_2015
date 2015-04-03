@@ -1,7 +1,7 @@
 
 #include <nuttx/config.h>
 #include <stdio.h>
-#includ "esp8266.h"
+#include "esp8266.h"
 
 #ifdef CONFIG_BUILD_KERNEL
 int main(int argc, FAR char *argv[])
@@ -9,6 +9,6 @@ int main(int argc, FAR char *argv[])
 int esp8266_main(int argc, char *argv[])
 #endif
 {
-	esp8266(arc, argc[]);
+	esp8266(argc, argv);
   return 0;
 }
