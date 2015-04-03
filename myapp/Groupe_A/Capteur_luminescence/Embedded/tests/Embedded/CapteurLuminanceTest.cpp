@@ -52,21 +52,28 @@ TEST(Embedded, CountLx2)
 }
 
 
-TEST(Embedded, TestAll)
+int ConvertADC_NuitTotale() 
 {
-  for (int i = 0; i < 15; ++i) {
-    sleep(1);
-    /*
-    fd = open(dev/adc/)
-    int val = 0;
-    result = read (fd, &val, sizeof(val));
-    ioctl(); // appel systeme sur les registres de la carte avec parametrage
-
-    */
-    int nombre;
-    srand(time(NULL));
-    nombre = (int)rand() % 4095;
-    
-    DOUBLES_EQUAL(nombre * 5.02232143 * 0.0000001, BitToLx(nombre), DELTA)
-  }
+  return 0;
 }
+
+
+TEST(Embedded, Luminance_Nuit_Total) 
+{
+// programme le mock de read dans un cas de nuit totale: retourne 0
+
+  initializeLuminance(&ConvertADC_NuitTotale);
+  DOUBLES_EQUAL(0, Luminance(), DELTA);
+}
+
+int ConvertADC_PleinJour()
+{
+  return 4095;
+}
+
+TEST(Embedded, Luminance_Jour_Total) 
+{
+// programme le mock de read dans un cas de nuit totale: retourne 0
+
+  initializeLuminance(&ConvertADC_PleinJour);
+  DOUBLES_EQUAL(1000, Luminance(), DELTA);
