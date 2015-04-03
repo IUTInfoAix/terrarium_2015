@@ -23,7 +23,7 @@ TEST_GROUP(Embedded)
 
 TEST(Embedded, CountTens1)
 {
-    DOUBLES_EQUAL(0.906, BitToTens(1035), DELTA);
+  DOUBLES_EQUAL(0.906, BitToTens(1035), DELTA);
 }
 
 TEST(Embedded, CountTens2)
@@ -33,22 +33,22 @@ TEST(Embedded, CountTens2)
 
 TEST(Embedded, CountIntens1) 
 {
-	DOUBLES_EQUAL(0.001, TensToIntens(3.5), DELTA);
+	DOUBLES_EQUAL(486.1111, TensToIntens(3.5), DELTA);
 }
 
 TEST(Embedded, CountIntens2) 
 {
-	DOUBLES_EQUAL(0.0002, TensToIntens(0.7), DELTA);
+	DOUBLES_EQUAL(13.89, TensToIntens(0.1), DELTA);
 }
 
 TEST(Embedded, CountLx1)
 {
-	DOUBLES_EQUAL(20, IntensToLx(10), DELTA)
+	DOUBLES_EQUAL(20, IntensToLx(10), DELTA);
 }
 
 TEST(Embedded, CountLx2)
 {
-	DOUBLES_EQUAL(200, IntensToLx(100), DELTA)
+	DOUBLES_EQUAL(200, IntensToLx(100), DELTA);
 }
 
 
@@ -73,7 +73,8 @@ int ConvertADC_PleinJour()
 
 TEST(Embedded, Luminance_Jour_Total) 
 {
-// programme le mock de read dans un cas de nuit totale: retourne 0
+// programme le mock de read dans un cas de jour totale: retourne 1000
 
   initializeLuminance(&ConvertADC_PleinJour);
-  DOUBLES_EQUAL(1000, Luminance(), DELTA);
+  DOUBLES_EQUAL(999.8, Luminance(), 0.1);
+}
