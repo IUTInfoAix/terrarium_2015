@@ -183,7 +183,7 @@ void tcp_status()
 	my_write(fd, str, strlen(str));
 	while (true)
 	{
-		read(fd, str, 256);
+		my_read(fd, str, 256);
 		if (str == "OK") break;
 		printf("%s \n", str);
 	}
@@ -192,7 +192,25 @@ void tcp_status()
 
 }
 
-
+void tcp_send_data(char* data)
+{
+	char* str = "AT+CIPSEND=256";
+	int fd = my_open("/dev/ttyS0", 0);
+	my_write(fd, str, strlen(str));
+	char * result;
+	my_read(fd, result, 256);
+	if(result == ">")
+	{
+		char * send = "/receiver.php?test=";
+		strcat(send, data);
+		my_write(fd, send, strlen(send);
+	}
+	else
+	{
+		printf("erreur lors de l'envoie du fichier");
+	}
+	my_close(fd);
+}
 
 /*
 * function: esp8266()
@@ -218,12 +236,17 @@ void esp8266(int argc, char **argv)
 	}
 	else if (argv[1] == "tcpconnect")
 	{
-		if (argc < 5) printf("usage: esp8266 connect <type> <address> <port>\n");
+		if (argc < 5) printf("usage: esp8266 tcpconnect <type> <address> <port>\n");
 		else tcp_connect(argv[2], argv[3], argv[4]);
 	}
 	else if (argv[1] == "tcpdisconnect")
 	{
 		tcp_disconnect();
+	}
+	else if (argv[1] == "send")
+	{
+	if(argc < 3) printf("usage: esp8266 send <data>");
+	else	tcp_send_data(argv[2]);
 	}
 	else if (argv[1] == "tcpstatus")
 	{
@@ -231,7 +254,7 @@ void esp8266(int argc, char **argv)
 	}
 	else if (argv[1] == "help")
 	{
-		print("connect \t disconnect \t list \n tcpconnect \t tcpdisconnect \t tcpstatus");
+		print("connect \t disconnect \t list \n tcpconnect \t tcpdisconnect \t tcpstatus \t send");
 	}
 	else
 	{
