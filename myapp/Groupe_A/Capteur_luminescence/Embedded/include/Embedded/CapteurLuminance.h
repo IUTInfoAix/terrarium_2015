@@ -6,4 +6,10 @@ double TensToIntens (double Tens);
 double IntensToLx (double Intens);
 double BitToLx (int bit);
 
+void initializeLuminance(int (*ConvertADC)());
+
+
+double Luminance();
+
+
 #endif

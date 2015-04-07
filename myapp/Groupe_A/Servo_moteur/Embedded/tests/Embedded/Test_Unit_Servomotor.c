@@ -7,6 +7,34 @@
 *
 *		Dernière modification : 2/04/2015
 */
+/*
+
+								|	|				
+								|	|
+								|	|
+								|	|
+								|	|
+							\            /
+							 \          /
+							  \        /
+							   \      /
+							    \    /
+							     \  /
+
+
+*/
+
+
+//=======================================================================/
+//*********!!!!!!!!!!!!!!!!!ATTENTION !! ATTENTION !! ATTENTION!!!*******
+//§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
+//******************************CE 
+//*******************************FICHIER 
+//**************************************EST 
+//¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤OBSOLETE
+//!!!!!!!!!!!!!!!!!OBSOLETE!!!!!!!!!!!!!!!!!!!!!!!!!OBSOLETE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+///!!!!!!!!!!!!!OBSOLETE!!!!!!!ON VOUS AVAIT PREVENU!!!!!!!!!!OBSOLETE!!!!!!!!!!!!!!!!!!!!!!
+//==========================================================================/
 
 
 /*
@@ -17,7 +45,7 @@
 			0 si un des tests de la fonction au minumum échoue.
 */
 
-int Test_Servomotor()
+int Test_Servomotor()//voir la définition de Servomotor pour plus d'infos
 {
 	int works = 1;// variable qui confirme la validité, prend 0 si un test échoue
 
@@ -80,6 +108,37 @@ int Test_Servomotor()
 	return works;
 }//Test_Servomotor()
 	
+
+int Test_InitRegister()//voir la définition de InitRegister() pour plus d'info
+{
+	int works  = 1; 
+
+//========================Test de duty
+
+	if(InitRegister(gduty,50,0.5) == 0)
+	{
+
+	}
+	else 
+	{
+		printf("%s\n", );
+		works = 0;
+	}
+
+//========================Test de freq
+
+	if(InitRegister(gduty,50,0.5))
+	{
+
+	}
+
+	if(InitRegister())
+//========================Test de freq
+//========================Test de duration
+//========================Test de count
+
+}//Test_InitRegister
+
 
 
 void RunAllTests()//Appelle toutes les fonctions de tests
