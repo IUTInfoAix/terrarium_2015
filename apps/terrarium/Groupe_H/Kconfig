@@ -3,17 +3,17 @@
 # see misc/tools/kconfig-language.txt.
 #
 
-config APPLICATION_GROUPE_A
-	bool "Groupe A application"
+config APPLICATION_GROUPE_H
+	bool "Groupe H application"
 	default n
 	---help---
-		Enable the Groupe A application
+		Enable the Groupe H application
 
-if APPLICATION_GROUPE_A
+if APPLICATION_GROUPE_H
 
 config APPLICATION_GROUPE_A_PROGNAME
 	string "Program name"
-	default "Application du groupe A"
+	default "Application du groupe H"
 	depends on BUILD_KERNEL
 	---help---
 		Basic application for terrarium students.
