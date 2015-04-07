@@ -5,7 +5,7 @@
 void initializeServomoteur(int (*ServoMoteur)(int positionAngulaire));
 int StrPostoInt(char posText[]);
 
-int mouvementstr(char val[]);
+int mouvementStr(char val[]);
 int mouvement(int val);
 
 #endif

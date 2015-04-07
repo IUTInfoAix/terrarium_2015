@@ -49,7 +49,9 @@ int mouvementStr(char val[]){
 
 
 int mouvement(int val){
-    return  my_pwm(val);
+    if(val >= 0 && val <= 180) return  my_pwm(val);
+    else 
+	return -1;
     
 }
 
