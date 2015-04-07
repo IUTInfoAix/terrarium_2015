@@ -3,9 +3,9 @@
 
 
 void initializeServomoteur(int (*ServoMoteur)(int positionAngulaire));
-int StrPostoString(String posText);
+int StrPostoInt(char posText[]);
 
-int mouvement(String val);
+int mouvementstr(char val[]);
 int mouvement(int val);
 
 #endif
