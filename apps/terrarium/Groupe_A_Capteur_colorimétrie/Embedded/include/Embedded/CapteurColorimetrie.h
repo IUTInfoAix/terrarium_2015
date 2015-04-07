@@ -1,15 +1,10 @@
-#ifndef EMBEDDED_CAPTEURLUMINANCE_H
-#define EMBEDDED_CAPTEURLUMINANCE_H
+#ifndef EMBEDDED_CAPTEURCOLORIMETRIE_H
+#define EMBEDDED_CAPTEURCOLORIMETRIE_H
 
-double BitToTens(int bit);
-double TensToIntens (double Tens);
-double IntensToLx (double Intens);
-double BitToLx (int bit);
+char *decimal_to_binary(int n);
+int* BitToRGB (int bit);
+void initializeColorimetrie (int (*ConvertADC)());
 
-void initializeLuminance(int (*ConvertADC)());
-
-
-double Luminance();
-
+int* Colorimetrie();
 
 #endif

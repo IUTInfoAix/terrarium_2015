@@ -31,11 +31,11 @@ int ConvertADC_CouleurBleu()
 TEST(Embedded, Luminance_Nuit_Total) 
 {
   // programme le mock de read dans un cas de nuit totale: retourne 0
-  int tab[3] = { 0, 0, 255 };
-  initializeLuminance(&ConvertADC_NuitTotale);
+  int tab[3] = { 0, 0, 15 };
+  initializeColorimetrie(&ConvertADC_CouleurBleu);
   int *resultat = Colorimetrie();
   for (int i = 0; i < 3; ++i) {
-    DOUBLES_EQUAL(tab[i], (&resultat)++, DELTA);
+    DOUBLES_EQUAL(tab[i], resultat[i], DELTA);
   }
 }
 
@@ -47,10 +47,10 @@ int ConvertADC_CouleurBlanche()
 TEST(Embedded, Couleur_Blanche_Total) 
 {
   // programme le mock de read dans un cas de jour totale: retourne 1000
-  includent tab[3] = { 0, 0, 255 };
-  initializeLuminance(&ConvertADC_NuitTotale);
+  int tab[3] = { 15, 15, 15 };
+  initializeColorimetrie(&ConvertADC_CouleurBlanche);
   int *resultat = Colorimetrie();
   for (int i = 0; i < 3; ++i) {
-    DOUBLES_EQUAL(tab[i], (&resultat)++, DELTA);
+    DOUBLES_EQUAL(tab[i], resultat[i], DELTA);
   }
 }
