@@ -37,8 +37,8 @@
  * Included Files
  ****************************************************************************/
 
-#include <nuttx/config.h>
-#include <stdio.h>
+//#include <nuttx/config.h>
+//#include <stdio.h>
 
 /****************************************************************************
  * Definitions
@@ -47,7 +47,7 @@
 /****************************************************************************
  * Private Data
  ****************************************************************************/
-my_ioctl = null;
+//my_ioctl = null;
 
 
 /****************************************************************************
@@ -60,29 +60,30 @@ my_ioctl = null;
 /****************************************************************************
  * Private Functions
  ****************************************************************************/
-static int pwm_open(struct file *filep);
+/*static int pwm_open(struct file *filep);
 static int pwm_close(struct file *filep);
 static ssize_t pwm_read(struct file *filep, char *buffer, size_t buflen);
 static ssize_t pwm_write(struct file *filep, const char *buffer, size_t buflen);
 static int pwm_start(struct pwm_upperhalf_s *upper, unsigned int oflags);
-//static int pwm_ioctl(struct file *filep, int cmd, unsigned long arg); 
-
+static int pwm_ioctl(struct file *filep, int cmd, unsigned long arg); 
+*/
 
 
 /****************************************************************************
  * Public Fonctions
  ****************************************************************************/
-static void initialize( (int)(ioctl)(struct file *filep, int cmd, unsigned long arg))
+/*static void initialize( (int)(ioctl)(struct file *filep, int cmd, unsigned long arg))
 {
 
   my_PWMIOC_START = mock_PWMIOC_START; //fonction de démarrage du PWM
   #define my_SETCARACTERISTIQUE mock_SETCARACTERISTIQUE //fonction pour définir le PWM
   #define 
 }
+*/
 /****************************************************************************
  * hello_main
  ****************************************************************************/
-
+/*
 #ifdef CONFIG_BUILD_KERNEL
 int main(int argc, FAR char *argv[])
 {
@@ -92,4 +93,7 @@ int main(int argc, FAR char *argv[])
 #else
 #error "Application needs CONFIG_BUILD_KERNEL"
 #endif
+*/
+
+
 
