@@ -1,9 +1,0 @@
-Carastéristique du Parallax Standard Servo
-angle de mouvement : 0° à 180°
-allimentation : 6VDC support
-donnéé : 3.3 to 5V
-contrôle via PWM
-pulse-Modulation : 0.75–2.25
-interval : 20 ms
-opérating -10°C 50°C
-
