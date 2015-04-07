@@ -192,6 +192,13 @@ void tcp_status()
 
 }
 
+/*
+*function: tcp_send_data(char* data)
+*return: void
+*brief: send data to tcp server
+*parameters: char* data
+*example: tcp_send_data("the test is true");
+*/
 void tcp_send_data(char* data)
 {
 	char* str = "AT+CIPSEND=256";
@@ -213,11 +220,11 @@ void tcp_send_data(char* data)
 }
 
 /*
-* function: esp8266()
+* function: esp8266(int argc, char **argv)
 * return: void
 * brief: main function of the module esp8266
 * parameters: int argc, char **argv
-* example: wifi_connect(2, ["esp8266"]["list"])
+* example: esp8266(2, ["esp8266"]["list"])
 */
 void esp8266(int argc, char **argv)
 {
