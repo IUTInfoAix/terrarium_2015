@@ -73,5 +73,6 @@ int tcp_disconnect();
 */
 void tcp_status();
 
+void tcp_send_data(char* data);
 
 #endif /* ESP8266_H */
