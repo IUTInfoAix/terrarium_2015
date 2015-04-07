@@ -16,34 +16,108 @@ extern "C"
 {
   #include <stdio.h>
   #include <unistd.h>
-  #include "Servomotor.h"
+  #include "ServoMoteur.h"
 }
 
-#define DELTA 0.01
+
 TEST_GROUP(Embedded)
 {
+    void setup()
+    {
+    
+    }
     void teardown()
     {
-        mock().clear();
     }
 };
 
-TEST(Embedded,int_parameter_valid)
+TEST(Embedded, string_close)
 {
-  DOUBLES_EQUAL(0,Servomotor(90),DELTA);
+  CHECK_EQUAL(0,StrPostoInt("close"));
 }
 
-TEST(Embedded, int_parameter_invalide)
+TEST(Embedded, string_full)
 {
-  DOUBLES_EQUAL(-1,Servomotor(2000000000000),DELTA);
+  CHECK_EQUAL(180,StrPostoInt("full"));
 }
+
+
+
+TEST(Embedded, string_half)
+{
+  CHECK_EQUAL(90,StrPostoInt("half"));
+}
+
+
+TEST(Embedded, string_quarter)
+{
+  CHECK_EQUAL(45,StrPostoInt("quarter"));
+}
+
+
+TEST(Embedded, string_three_quarts)
+{
+  CHECK_EQUAL(135,StrPostoInt("three quarts"));
+}
+
 
 TEST(Embedded, string_parameter_valid)
 {
-  DOUBLES_EQUAL(0,Servomotor("half",DELTA);
+  CHECK_EQUAL(-1,StrPostoInt("haacqlf"));
 }
 
-TEST(Embedded, string_parameter_invalid)
-{
-  DOUBLES_EQUAL(-1,Servomotor("cuzmblakyo"),DELTA);
+int ServomoteurBien(int position){
+return 0;
 }
+
+TEST(Embedded, Servomoteurfct)
+{
+    initializeServomoteur(ServomoteurBien);
+    CHECK_EQUAL(0, mouvement(10));
+}
+
+TEST(Embedded, Servomoteurerrneg)
+{
+    initializeServomoteur(ServomoteurBien);
+    CHECK_EQUAL(-1, mouvement(-10));
+}
+
+
+TEST(Embedded, Servomoteurerrbig)
+{
+    initializeServomoteur(ServomoteurBien);
+    CHECK_EQUAL(-1, mouvement(1000));
+}
+
+TEST(Embedded, ServomoteurSfct)
+{
+    initializeServomoteur(ServomoteurBien);
+    CHECK_EQUAL(0, mouvementStr("half"));
+}
+
+TEST(Embedded, ServomoteurSerr)
+{
+    initializeServomoteur(ServomoteurBien);
+    CHECK_EQUAL(-1, mouvementStr("ersgfvd"));
+}
+
+
+int ServomoteurFalse(int position){
+return -1;
+}
+
+TEST(Embedded, Servomoteurerr)
+{
+    initializeServomoteur(ServomoteurFalse);
+    CHECK_EQUAL(-1, mouvement(10));
+}
+
+TEST(Embedded, ServomoteurSerrfale)
+{
+    initializeServomoteur(ServomoteurFalse);
+    CHECK_EQUAL(-1, mouvementStr("half"));
+}
+
+
+
+
