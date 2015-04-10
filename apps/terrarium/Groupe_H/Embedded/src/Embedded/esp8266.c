@@ -6,16 +6,16 @@
 
 
 #include "esp8266.h"
-#include <type.h>
+#include <sys/types.h>
+#include <string.h>	//strlen
+#include <stdio.h>	//scanf
 
 
-namespace my_functions {
-	(int)(*my_open)(const char *, int, mode_t) = 0;
-	(int)(*my_open)(const char *, int) = 0;
-	(int)(*my_close)(int) = 0;
-	(ssize_t) (*read)(int , void* , size_t) = 0;
-	(ssize_t)(*my_write)(int, const void*, size_t) = 0;
-}
+	int		(*my_open)(const char *, int, mode_t) = 0;
+	int		(*my_open)(const char *, int) = 0;
+	int		(*my_close)(int) = 0;
+	ssize_t		(*my_read)(int , void* , size_t) = 0;
+	ssize_t		(*my_write)(int, const void*, size_t) = 0;
 
 
 /****************************************************************/
@@ -31,15 +31,15 @@ namespace my_functions {
 */
 void wifi_list()
 {
+	//Envoie de la commande pour récuperer la liste des points wifi
 	char *str = "AT+CWLAP";
 	int fd = my_open("/dev/ttyS0", 0);
 	my_write(fd, str, strlen(str));
-
-	str = ""
+	
+	str = "";
 	while (true)
 	{
-
-		read(fd, str, 256);
+		my_read(fd, str, 256);
 		if (strlen(str) == "")
 		{
 			printf("No access point available \n");
