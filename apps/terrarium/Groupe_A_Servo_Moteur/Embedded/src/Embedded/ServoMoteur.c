@@ -26,11 +26,15 @@ NB: Voir pwm.c dans le même dossier
 #include "ServoMoteur.h"
 int (*my_pwm)();
 
-
-
 void initializeServomoteur( int (*Mouvement)(int positionAngulaire)){
     my_pwm  = Mouvement;
 }
+
+void initializeServomoteurSplit(int (*BoardInitialize)(int frontMontant, int pulseTime, int countPulse ), int (*start()))
+{
+    
+}
+
 
 int StrPostoInt(char posText[]){
     if(strcmp(posText,"close") == 0) return 0;
@@ -39,6 +43,7 @@ int StrPostoInt(char posText[]){
     else if (strcmp(posText,"quarter") == 0) return 45;
     else if (strcmp(posText,"three quarts") == 0) return 135;
     else return -1;
+
 }
 
 int ServoMoteurStr(char val[]){
