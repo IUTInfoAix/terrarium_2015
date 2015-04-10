@@ -2,10 +2,10 @@
 #define EMBEDDED_HELLO_H
 
 
-void initializeServomoteur(int (*ServoMoteur)(int positionAngulaire));
+void initializeServomoteur(int (*Mouvement)(int positionAngulaire));
 int StrPostoInt(char posText[]);
 
-int mouvementStr(char val[]);
-int mouvement(int val);
+int ServoMoteurStr(char val[]);
+int ServoMoteur(int val);
 
 #endif

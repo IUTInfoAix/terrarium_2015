@@ -73,32 +73,32 @@ return 0;
 TEST(Embedded, Servomoteurfct)
 {
     initializeServomoteur(ServomoteurBien);
-    CHECK_EQUAL(0, mouvement(10));
+    CHECK_EQUAL(0, ServoMoteur(10));
 }
 
 TEST(Embedded, Servomoteurerrneg)
 {
     initializeServomoteur(ServomoteurBien);
-    CHECK_EQUAL(-1, mouvement(-10));
+    CHECK_EQUAL(-1, ServoMoteur(-10));
 }
 
 
 TEST(Embedded, Servomoteurerrbig)
 {
     initializeServomoteur(ServomoteurBien);
-    CHECK_EQUAL(-1, mouvement(1000));
+    CHECK_EQUAL(-1, ServoMoteur(1000));
 }
 
 TEST(Embedded, ServomoteurSfct)
 {
     initializeServomoteur(ServomoteurBien);
-    CHECK_EQUAL(0, mouvementStr("half"));
+    CHECK_EQUAL(0, ServoMoteurStr("half"));
 }
 
 TEST(Embedded, ServomoteurSerr)
 {
     initializeServomoteur(ServomoteurBien);
-    CHECK_EQUAL(-1, mouvementStr("ersgfvd"));
+    CHECK_EQUAL(-1, ServoMoteurStr("ersgfvd"));
 }
 
 
@@ -109,15 +109,11 @@ return -1;
 TEST(Embedded, Servomoteurerr)
 {
     initializeServomoteur(ServomoteurFalse);
-    CHECK_EQUAL(-1, mouvement(10));
+    CHECK_EQUAL(-1, ServoMoteur(10));
 }
 
 TEST(Embedded, ServomoteurSerrfale)
 {
     initializeServomoteur(ServomoteurFalse);
-    CHECK_EQUAL(-1, mouvementStr("half"));
+    CHECK_EQUAL(-1, ServoMoteurStr("half"));
 }
-
-
-
-

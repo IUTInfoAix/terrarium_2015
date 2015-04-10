@@ -28,8 +28,8 @@ int (*my_pwm)();
 
 
 
-void initializeServomoteur( int (*ServoMoteur)(int positionAngulaire)){
-    my_pwm  = ServoMoteur;
+void initializeServomoteur( int (*Mouvement)(int positionAngulaire)){
+    my_pwm  = Mouvement;
 }
 
 int StrPostoInt(char posText[]){
@@ -41,14 +41,14 @@ int StrPostoInt(char posText[]){
     else return -1;
 }
 
-int mouvementStr(char val[]){
+int ServoMoteurStr(char val[]){
     int valint = StrPostoInt(val);
     if (valint != -1) return my_pwm(valint);
     else return valint;
 }
 
 
-int mouvement(int val){
+int ServoMoteur(int val){
     if(val >= 0 && val <= 180) return  my_pwm(val);
     else 
 	return -1;
