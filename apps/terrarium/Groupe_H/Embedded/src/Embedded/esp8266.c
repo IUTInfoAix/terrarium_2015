@@ -5,13 +5,12 @@
 */
 
 
-#include "esp8266.h"
+#include <esp8266.h>
 #include <sys/types.h>
 #include <string.h>	//strlen
 #include <stdio.h>	//scanf
 
 
-	int		(*my_open)(const char *, int, mode_t) = 0;
 	int		(*my_open)(const char *, int) = 0;
 	int		(*my_close)(int) = 0;
 	ssize_t		(*my_read)(int , void* , size_t) = 0;
@@ -37,20 +36,17 @@ void wifi_list()
 	my_write(fd, str, strlen(str));
 	
 	str = "";
-	while (true)
+	while (1)
 	{
 		my_read(fd, str, 256);
-		if (strlen(str) == "")
-		{
+		if (0 == strlen(str)){
 			printf("No access point available \n");
 			break;
 		}
 		if (str == "OK") break;
 		printf("%s \n", str);
 	}
-
 	my_close(fd);
-
 }
 
 /*
