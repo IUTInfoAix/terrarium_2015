@@ -36,10 +36,9 @@ TEST(Embedded, Colorimetrie_CouleurBleu)
   int resultat[3]; 
   int erreur = Colorimetrie(resultat);
   
-  if (erreur) {
-    for (int i = 0; i < 3; ++i) {
-      DOUBLES_EQUAL(tab[i], resultat[i], DELTA);
-    }
+  CHECK_EQUAL(erreur, 0);
+  for (int i = 0; i < 3; ++i) {
+    DOUBLES_EQUAL(tab[i], resultat[i], DELTA);
   }
 }
 
@@ -56,11 +55,10 @@ TEST(Embedded, Colorimetrie_CouleurBlanche)
   int resultat[3]; 
   int erreur = Colorimetrie(resultat);
   
-  if (erreur) {
-    for (int i = 0; i < 3; ++i) {
-      DOUBLES_EQUAL(tab[i], resultat[i], DELTA);
-    }
-  }
+  CHECK_EQUAL(erreur, 0);
+  for (int i = 0; i < 3; ++i) {
+    DOUBLES_EQUAL(tab[i], resultat[i], DELTA);
+  } 
 }
 
 int ConvertADC_CouleurRouge()
@@ -75,18 +73,16 @@ TEST(Embedded, Colorimetrie_CouleurRouge)
   initializeColorimetrie(&ConvertADC_CouleurRouge);
   int resultat[3]; 
   int erreur = Colorimetrie(resultat);
-  
-  if (erreur) {
-    for (int i = 0; i < 3; ++i) {
-      DOUBLES_EQUAL(tab[i], resultat[i], DELTA);
-    }
+  CHECK_EQUAL(erreur, 0);
+  for (int i = 0; i < 3; ++i) {
+    DOUBLES_EQUAL(tab[i], resultat[i], DELTA);
   }
 }
 
 int ConvertADC_CouleurVerte()
 {
-  return 2192;
-}
+  return 240;
+} // 0000.1111.0000
 
 TEST(Embedded, Colorimetrie_CouleurVerte) 
 {
@@ -96,9 +92,8 @@ TEST(Embedded, Colorimetrie_CouleurVerte)
   int resultat[3]; 
   int erreur = Colorimetrie(resultat);
   
-  if (erreur) {
-    for (int i = 0; i < 3; ++i) {
-      DOUBLES_EQUAL(tab[i], resultat[i], DELTA);
-    }
+  CHECK_EQUAL(erreur, 0);
+  for (int i = 0; i < 3; ++i) {
+    DOUBLES_EQUAL(tab[i], resultat[i], DELTA);
   }
 }
