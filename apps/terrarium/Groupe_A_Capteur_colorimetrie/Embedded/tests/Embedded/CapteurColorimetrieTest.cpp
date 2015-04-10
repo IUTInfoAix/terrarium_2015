@@ -22,7 +22,7 @@ TEST_GROUP(Embedded)
 };
 
 
-int ConvertADC_CouleurBleu() 
+int ConvertADC_CouleurBleu(char* filename, int access, int permission) 
 {
   return 15;
 }
@@ -42,7 +42,7 @@ TEST(Embedded, Colorimetrie_CouleurBleu)
   }
 }
 
-int ConvertADC_CouleurBlanche()
+int ConvertADC_CouleurBlanche(char* filename, int access, int permission)
 {
   return 4095;
 }
@@ -61,7 +61,7 @@ TEST(Embedded, Colorimetrie_CouleurBlanche)
   } 
 }
 
-int ConvertADC_CouleurRouge()
+int ConvertADC_CouleurRouge(char* filename, int access, int permission)
 {
   return 3840;
 }
@@ -79,7 +79,7 @@ TEST(Embedded, Colorimetrie_CouleurRouge)
   }
 }
 
-int ConvertADC_CouleurVerte()
+int ConvertADC_CouleurVerte(char* filename, int access, int permission)
 {
   return 240;
 } // 0000.1111.0000

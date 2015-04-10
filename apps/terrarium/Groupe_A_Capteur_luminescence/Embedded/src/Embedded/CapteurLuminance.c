@@ -1,6 +1,6 @@
 #include "CapteurLuminance.h"
 
-int (*my_ConvertADC)();
+int (*my_ConvertADC)(char*, int, int);
 
 double BitToTens(int bit) 
 {
@@ -25,11 +25,11 @@ double BitToLx (int bit)
 
 double Luminance()
 {
-    int nombre = my_ConvertADC();
+    int nombre = my_ConvertADC("", 0, 0);
     return BitToLx(nombre);
 }
 
-void initializeLuminance (int (*ConvertADC)())
+void initializeLuminance (int (*ConvertADC)(char*, int, int))
 {
 	/*
     fd = open(dev/adc/)

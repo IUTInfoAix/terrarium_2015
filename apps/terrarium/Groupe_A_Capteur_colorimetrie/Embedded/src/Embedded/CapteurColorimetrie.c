@@ -5,7 +5,7 @@
 #include <math.h>
 
 
-int (*my_ConvertADC)();
+int (*my_ConvertADC)(char*, int, int);
 
 int BitToRGB (int bit, int* result)
 {
@@ -86,11 +86,11 @@ char *decimal_to_binary(int n)
 
 int Colorimetrie(int* result)
 {
-    int nombre = my_ConvertADC();
+    int nombre = my_ConvertADC("", 0, 0);
     return BitToRGB(nombre, result);
 }
 
-void initializeColorimetrie (int (*ConvertADC)())
+void initializeColorimetrie (int (*ConvertADC)(char*, int, int))
 {
 	/*
     fd = open(dev/adc/)

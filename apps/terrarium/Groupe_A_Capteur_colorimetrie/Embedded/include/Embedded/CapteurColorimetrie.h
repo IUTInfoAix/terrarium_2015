@@ -3,7 +3,7 @@
 
 char *decimal_to_binary(int n);
 int BitToRGB (int bit, int* result);
-void initializeColorimetrie (int (*ConvertADC)());
+void initializeColorimetrie (int (*ConvertADC)(char*, int, int));
 
 int Colorimetrie(int* result);
 

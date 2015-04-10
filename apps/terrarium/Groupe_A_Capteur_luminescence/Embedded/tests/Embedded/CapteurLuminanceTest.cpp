@@ -52,7 +52,7 @@ TEST(Embedded, CountLx2)
 }
 
 
-int ConvertADC_NuitTotale() 
+int ConvertADC_NuitTotale(char* filename, int access, int permission) 
 {
   return 0;
 }
@@ -66,7 +66,7 @@ TEST(Embedded, Luminance_Nuit_Total)
   DOUBLES_EQUAL(0, Luminance(), DELTA);
 }
 
-int ConvertADC_PleinJour()
+int ConvertADC_PleinJour(char* filename, int access, int permission)
 {
   return 4095;
 }
