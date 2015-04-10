@@ -1,2 +1,0 @@
-/usr/bin/ar cr ../lib/libEmbedded.a  CMakeFiles/Embedded.dir/Embedded/Hello.c.o
-/usr/bin/ranlib ../lib/libEmbedded.a
