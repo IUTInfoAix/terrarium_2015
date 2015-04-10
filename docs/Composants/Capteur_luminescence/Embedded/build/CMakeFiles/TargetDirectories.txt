@@ -1,3 +1,0 @@
-/home/ahmed/projects/terrarium_2015/docs/Composants/Capteur_luminescence/Embedded/build/src/CMakeFiles/Embedded.dir
-/home/ahmed/projects/terrarium_2015/docs/Composants/Capteur_luminescence/Embedded/build/tests/CMakeFiles/EmbeddedTest.dir
-/home/ahmed/projects/terrarium_2015/docs/Composants/Capteur_luminescence/Embedded/build/tests/CMakeFiles/RunAllTests.dir

@@ -1,2 +1,0 @@
-/usr/bin/ar cr ../lib/libEmbeddedTest.a  CMakeFiles/EmbeddedTest.dir/Embedded/HelloTest.cpp.o
-/usr/bin/ranlib ../lib/libEmbeddedTest.a
