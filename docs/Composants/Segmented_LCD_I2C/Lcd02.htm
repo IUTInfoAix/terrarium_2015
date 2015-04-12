@@ -1,0 +1,505 @@
+<html><head>
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>I2C display</title>
+</head>
+
+<body>
+
+<p align="center"><font size="6">&nbsp;LCD02 - I2C/Serial LCD&nbsp;</font><b><font size="5"><br>
+</font></b><font size="4">Technical Documentation&nbsp;<br>
+</font></p>
+<p align="center"><img src="I2C%20display_files/lcd02c.jpg" border="0" height="231" width="367"></p>
+<p align="left"><b>Overview</b><br>
+<br>
+The I2C and serial display driver provides easy operation of a standard 
+20*4 LCD
+Text display. It requires only a 5v power supply and the two data
+connections for either mode, freeing up pins on your processor. Many 
+useful text formatting
+functions are provided (described below) and also the ability to put 
+together
+custom&nbsp;characters into memory which can be called off as required. 
+There is a 64 byte FIFO buffer to ensure a minimum of delay in writing 
+to the
+display.</p>
+<p align="left"><b>Connections</b></p>
+<p align="center"><img src="I2C%20display_files/lcd.GIF" border="0" height="377" width="730"></p>
+<p align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="I2C%20display_files/keypad.GIF" border="0" height="234" width="372"><br>
+Pins 1 and 9 are unconnected - only pins 2 - 8 are used.</p>
+<p align="left"><b><font size="3">Serial/I2C Mode selection</font></b><br>
+A single jumper link is used to select Serial or I2C mode. When the jumper is
+present (factory default) the module is in serial mode. When the jumper is
+removed the module is in I2C mode. The mode jumper is only checked as part of
+the power-up sequence, so make sure the display is off before changing modes. If
+you change the link position while the module is powered, nothing will change
+until next time you switch on.</p>
+<p align="left"><font size="4"><b>FIFO<br>
+</b></font>Because the I2C communications operate faster than the
+display can accept data, all commands and text you send to the display are
+placed in the FIFO (First In, First Out) buffer. This data is sent to the
+display as fast as it will accept it. The FIFO is 64 bytes in length and the number of
+free bytes can be returned in either mode. When sending lots of text to the
+display, you should check the number of free bytes so you don't overflow the
+buffer. If the buffer does overflow, the excess bytes are ignored. The FIFO
+buffer exists in Serial mode too, but at 9600 the display is fast enough and you
+are unlikely to need to check it.</p>
+<p align="left"><b>
+<u>
+<br>
+</u><font size="4">I2C Operation<br>
+</font>I2C Bus<br>
+</b>The I2C display is located on the I2C bus at an address of 0XC6.&nbsp;The
+SCL and SDA lines should have pull-up resistors on them somewhere on the bus.
+You only require 1 pair of resistors for the whole I2C bus, not specifically for
+the LCD02. They are normally on the master controller and you may already have
+them. If not, anything between 1k8 and 10k should work. I recommend 1k8 for best
+noise immunity.&nbsp;</p>
+<p><b>Display control commands<br>
+</b>The LCD02 has four registers, three of which are read only information
+registers. Register 0 is a dual purpose register, when written, it is the command register where all of the instructions from
+the commands section should be sent. When read it returns the number of free bytes in the FIFO
+buffer.&nbsp;<br>
+</p>
+<div align="center">
+  <center>
+  <table bgcolor="#CCFFCC" border="1" cellpadding="2" cellspacing="0">
+    <tbody><tr>
+      <td bgcolor="#66FFFF" align="center">register</td>
+      <td bgcolor="#66FFFF" align="center">
+        <p align="center">Read
+      </p></td>
+      <td bgcolor="#66FFFF" align="center">
+        Write
+      </td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">0</td>
+      <td align="center">Number of free bytes in FIFO buffer</td>
+      <td align="center">Command register</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">1</td>
+      <td align="center">Keypad state Low byte</td>
+      <td align="center">x</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">2</td>
+      <td align="center">Keypad state High byte</td>
+      <td align="center">x</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">3</td>
+      <td align="center">Version</td>
+      <td align="center">
+        x
+      </td>
+    </tr>
+  </tbody></table>
+
+  </center>
+</div>
+
+<p><b><font size="4">Serial operation</font></b></p>
+<p>The Serial mode operates over a link with a baud rate of 9600 bps (no
+ parity,
+2 stop bits) and 5v
+signals, Do NOT connect RS232 directly to the module - you will destroy 
+it. Use
+a MAX232 or equivalent to convert the RS232 levels to 5v. Operation is 
+with the same command set as the I2C mode with an additional set of
+commands to request data to be sent i.e. the software version.</p>
+<p align="center"><b><font size="4">Commands
+(for both I2C and Serial)</font></b></p>
+<div align="center">
+  <center>
+  <table bgcolor="#CCFFCC" border="1" cellpadding="2" cellspacing="0">
+    <tbody><tr>
+      <td bgcolor="#66FFFF" align="center">decimal</td>
+      <td bgcolor="#66FFFF" align="center">
+        <p align="center">command</p>
+      </td>
+      <td bgcolor="#66FFFF" align="center">
+        description
+      </td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">0</td>
+      <td align="center">null (ignored)</td>
+      <td align="center">Ignored as a no operation</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">1</td>
+      <td align="center">Cursor Home</td>
+      <td align="center">&nbsp;Sets the cursor to the
+        home position (top left)</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">2</td>
+      <td align="center">Set cursor (1-80)</td>
+      <td align="center">Cursor to a position
+        specified by the next byte, where 1 is the top left and 80 is the
+        bottom right</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">3</td>
+      <td align="center">set cursor (line, column)</td>
+      <td align="center">Sets cursor using two bytes,
+        where first byte is the line and the second byte is the column</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">4</td>
+      <td align="center">Hide cursor</td>
+      <td align="center">stops the position cursor from
+        appearing on the display&nbsp;</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">5</td>
+      <td align="center">Show underline cursor</td>
+      <td align="center">Changes the cursor to the
+        underline type&nbsp;</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">6</td>
+      <td align="center">Show blinking cursor</td>
+      <td align="center">Changes the cursor to the
+        blinking type</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">8</td>
+      <td align="center">Backspace</td>
+      <td align="center">deletes the preceding character from the current position on the display</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">9</td>
+      <td align="center">Horizontal tab (by tab set) </td>
+      <td align="center">Moves the current position
+        across by the tab space set by command 18 (default tab space 4) </td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">10</td>
+      <td align="center" nowrap="nowrap">Smart line feed </td>
+      <td align="center" nowrap="nowrap">Moves the cursor down
+        one line to the position beneath in the same column </td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">11</td>
+      <td align="center">Vertical tab</td>
+      <td align="center">Moves the cursor up one line to
+        the position above in the same column&nbsp;</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">12</td>
+      <td align="center">Clear screen</td>
+      <td align="center">Clears the screen and sets
+        cursor to the home position</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">13</td>
+      <td align="center">Carriage Return</td>
+      <td align="center">Moves the cursor to the start
+        of the next line</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">17</td>
+      <td align="center">Clear Column</td>
+      <td align="center">Clears the contents of the
+        current column and moves cursor right by one column</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">18</td>
+      <td align="center">Tab set</td>
+      <td align="center">Sets the required tab size, the
+        following byte can be a size of between 1 and 10</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">27</td>
+      <td align="center">Custom char generator</td>
+      <td align="center">allows 8 custom chars to be
+        built. See custom char generator below</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">32-255</td>
+      <td align="center">ASCII chars</td>
+      <td align="center">Writes ASCII chars straight to
+        the display</td>
+    </tr>
+  </tbody></table>
+
+  </center>
+</div>
+
+<p align="center"><font size="4"><b>Additional
+commands (Serial only)</b></font></p>
+<div align="center">
+  <center>
+  <table bgcolor="#CCFFCC" border="1" cellpadding="2" cellspacing="0">
+    <tbody><tr>
+      <td bgcolor="#66FFFF" align="center">decimal</td>
+      <td bgcolor="#66FFFF" align="center">
+        <p align="center">command
+      </p></td>
+      <td bgcolor="#66FFFF" align="center">
+        description
+      </td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">14</td>
+      <td align="center">FIFO status</td>
+      <td align="center">Results in the module returning
+        its FIFO status, the number of free bytes from 0 to 64&nbsp;</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">15</td>
+      <td align="center">Software version</td>
+      <td align="center">Results in the module returning
+        its single byte software version</td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFF00" align="center">16</td>
+      <td align="center">Keypad status</td>
+      <td align="center">Returns keypad input status, two bytes returned with
+        the low byte first (see keypad section)</td>
+    </tr>
+  </tbody></table>
+
+  </center>
+</div>
+&nbsp;
+
+<p><br>
+<b><font size="4">Custom char generator<br>
+</font></b>Custom characters can be generated by sending an 8 byte map. The first thing
+that must be done is to send a command of 27 to indicate that you intend to make
+a custom char. Next you have to specify the position in ram of one of the 8
+available chars you intend to build, the 8
+chars are mapped at&nbsp; positions 128-135. Then the pattern should be sent as below.
+ </p>
+
+<p>How to calculate an 8 byte character pattern:<br>
+Eight bytes are sent with the highest bit masked on, the next two bits are
+ignored (x) and the final 5 bits show the line pattern.</p>
+<div align="center">
+  <center>
+  <table bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" border="1" cellspacing="1" height="266" width="440">
+    <tbody><tr>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" align="center" height="34" width="70"></th>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" height="34" width="23"></th>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" height="34" width="22"></th>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" height="34" width="25"></th>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" height="34" width="26"></th>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" height="34" width="24"> </th>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" height="34" width="208"> </th>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" height="34" width="2"> </th>
+    </tr>
+    <tr>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" align="center" height="34" width="70"></th>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" height="34" width="23"><font size="2">Bit&nbsp;
+        4</font></th>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" height="34" width="22"><font size="2">Bit&nbsp;
+        3</font></th>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" height="34" width="25"><font size="2">Bit&nbsp;
+        2</font></th>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" height="34" width="26"><font size="2">Bit&nbsp;
+        1</font></th>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" height="34" width="24"><font size="2">Bit&nbsp;
+        0</font> </th>
+      <th bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bordercolor="#FFFFFF" height="34" width="218">sent
+        byte </th>
+    </tr>
+    <tr>
+      <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" height="16" width="70"><font size="3"><b>Byte
+        0</b></font></td>
+      <td bordercolor="#000000" height="16" width="23">&nbsp;</td>
+      <td bordercolor="#000000" height="16" width="22">&nbsp;</td>
+      <td bordercolor="#000000" height="16" width="25">&nbsp;</td>
+      <td bordercolor="#000000" height="16" width="26">&nbsp;</td>
+      <td bordercolor="#000000" height="16" width="24">&nbsp;</td>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" height="16" width="218">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        1xx00000&nbsp; (128)</td>
+    </tr>
+    <tr>
+      <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" height="17" width="70"><b>Byte
+        1</b></td>
+      <td bordercolor="#000000" height="17" width="23">&nbsp;</td>
+      <td bordercolor="#000000" height="17" width="22">&nbsp;</td>
+      <td bordercolor="#000000" bgcolor="#000000" height="17" width="25">&nbsp;</td>
+      <td bordercolor="#000000" height="17" width="26">&nbsp;</td>
+      <td bordercolor="#000000" height="17" width="24">&nbsp;</td>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" height="17" width="218">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        1xx00100&nbsp; (132)</td>
+    </tr>
+    <tr>
+      <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" height="16" width="70"><b>Byte
+        2</b></td>
+      <td bordercolor="#000000" height="16" width="23">&nbsp;</td>
+      <td bordercolor="#000000" bgcolor="#000000" height="16" width="22">&nbsp;</td>
+      <td bordercolor="#000000" bgcolor="#000000" height="16" width="25">&nbsp;</td>
+      <td bordercolor="#000000" bgcolor="#000000" height="16" width="26">&nbsp;</td>
+      <td bordercolor="#000000" height="16" width="24">&nbsp;</td>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" height="16" width="218">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        1xx01110&nbsp; (142)</td>
+    </tr>
+    <tr>
+      <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" height="19" width="70"><b>Byte
+        3</b></td>
+      <td bordercolor="#000000" bgcolor="#000000" height="19" width="23">&nbsp;</td>
+      <td bordercolor="#000000" height="19" width="22">&nbsp;</td>
+      <td bordercolor="#000000" bgcolor="#000000" height="19" width="25">&nbsp;</td>
+      <td bordercolor="#000000" height="19" width="26">&nbsp;&nbsp;</td>
+      <td bordercolor="#000000" bgcolor="#000000" height="19" width="24">&nbsp;</td>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bgcolor="#FFFFFF" height="19" width="218">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        1xx10101&nbsp; (149)</td>
+    </tr>
+    <tr>
+      <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" height="16" width="70"><b>Byte
+        4</b></td>
+      <td bordercolor="#000000" height="16" width="23">&nbsp;</td>
+      <td bordercolor="#000000" height="16" width="22">&nbsp;</td>
+      <td bordercolor="#000000" bgcolor="#000000" height="16" width="25">&nbsp;</td>
+      <td bordercolor="#000000" height="16" width="26">&nbsp;&nbsp;</td>
+      <td bordercolor="#000000" height="16" width="24">&nbsp;</td>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" height="16" width="218">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        1xx00100&nbsp; (132)</td>
+    </tr>
+    <tr>
+      <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" height="17" width="70"><b>Byte
+        5</b></td>
+      <td bordercolor="#000000" height="17" width="23">&nbsp;</td>
+      <td bordercolor="#000000" height="17" width="22">&nbsp;</td>
+      <td bordercolor="#000000" bgcolor="#000000" height="17" width="25">&nbsp;</td>
+      <td bordercolor="#000000" height="17" width="26">&nbsp;</td>
+      <td bordercolor="#000000" height="17" width="24">&nbsp;</td>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" height="17" width="218">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        1xx00100&nbsp; (132)</td>
+    </tr>
+    <tr>
+      <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" height="18" width="70"><b>Byte
+        6</b></td>
+      <td bordercolor="#000000" height="18" width="23">&nbsp;</td>
+      <td bordercolor="#000000" height="18" width="22">&nbsp;</td>
+      <td bordercolor="#000000" bgcolor="#000000" height="18" width="25">&nbsp;</td>
+      <td bordercolor="#000000" height="18" width="26">&nbsp;</td>
+      <td bordercolor="#000000" height="18" width="24">&nbsp;</td>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" height="18" width="218">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        1xx00100&nbsp; (132)</td>
+    </tr>
+    <tr>
+      <td bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" height="19" width="70"><b>Byte
+        7</b></td>
+      <td bordercolor="#000000" height="19" width="23">&nbsp;</td>
+      <td bordercolor="#000000" height="19" width="22">&nbsp;</td>
+      <td bordercolor="#000000" height="19" width="25">&nbsp;</td>
+      <td bordercolor="#000000" height="19" width="26">&nbsp;</td>
+      <td bordercolor="#000000" height="19" width="24">&nbsp;</td>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" height="19" width="218">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        1xx00000&nbsp; (128)</td>
+    </tr>
+  </tbody></table>
+  </center>
+</div>
+
+<p>So to build the above arrow into location 128 you would send this sequence to
+the command register:</p>
+<ul>
+  <li>27 (char generate command)</li>
+  <li>128 (location to be filled)</li>
+  <li>128 (byte 0)</li>
+  <li>132 (byte1)</li>
+  <li>142 (byte2)</li>
+  <li>149 (byte3)</li>
+  <li>132 (byte 4)</li>
+  <li>132 (byte 5)</li>
+  <li>132 (byte 6)</li>
+  <li>128 (byte 7)</li>
+</ul>
+<p>Now the char is built into a memory location it can be called at any time as
+long as the module remains powered by simply sending the address between 128 and
+135.</p>
+<p><b><font size="4">Keypad input</font></b></p>
+
+<p><span style="background-color: #FFFFFF">An added feature of the module is the
+ability to connect a 3*4 Keypad, the module will automatically scan the status
+of the keys at regular intervals. The result is then provided in two bytes for
+easy use, shown by the diagram below. Each bit represents the row and column of
+each button on the keypad. The second row is the keypad characters when using
+our keypad.</span></p>
+
+<div align="center">
+  <center>
+  <table border="1" bordercolor="#000000" height="9">
+    <tbody><tr>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bgcolor="#FFFFFF" align="center" height="1" width="40">
+        &nbsp;</td>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bgcolor="#FFFFFF" align="center" height="1" width="40">&nbsp;</td>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bgcolor="#FFFFFF" align="center" height="1" width="40">&nbsp;</td>
+      <td bordercolor="#FFFFFF" bgcolor="#FFFFFF" align="center" height="1" width="40">High</td>
+      <td bordercolor="#FFFFFF" align="center" height="1" width="40">byte</td>
+      <td bordercolor="#FFFFFF" align="center" height="1" width="40">&nbsp;</td>
+      <td bordercolor="#FFFFFF" align="center" height="1" width="40">&nbsp;</td>
+      <td bordercolor="#FFFFFF" align="center" height="1" width="40">&nbsp;</td>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" bgcolor="#FFFFFF" align="center" height="1">&nbsp;</td>
+      <td bordercolor="#FFFFFF" align="center" height="1" width="40">&nbsp;</td>
+      <td bordercolor="#FFFFFF" align="center" height="1" width="41">&nbsp;</td>
+      <td bordercolor="#FFFFFF" align="center" height="1" width="39">&nbsp;</td>
+      <td bordercolor="#FFFFFF" align="center" height="1" width="40">Low</td>
+      <td bordercolor="#FFFFFF" align="center" height="1" width="40">byte</td>
+      <td bordercolor="#FFFFFF" align="center" height="1" width="40">&nbsp;</td>
+      <td bordercolor="#FFFFFF" align="center" height="1" width="40">&nbsp;</td>
+      <td bordercolor="#FFFFFF" align="center" height="1" width="40">&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="center" height="19" width="40">
+        <p align="center">0</p></td>
+      <td align="center" height="19" width="40">0</td>
+      <td align="center" height="19" width="40">0</td>
+      <td align="center" height="19" width="40">0</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">4/3</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">4/2</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">4/1</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">3/3</td>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" height="19">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">3/2</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="41">3/1</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="39">2/3</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">2/2</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">2/1</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">1/3</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">1/2</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">1/1</td>
+    </tr>
+    <tr>
+      <td align="center" height="19" width="40">
+        <p align="center">0</p></td>
+      <td align="center" height="19" width="40">0</td>
+      <td align="center" height="19" width="40">0</td>
+      <td align="center" height="19" width="40">0</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">#</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">0</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">*</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">9</td>
+      <td bordercolor="#FFFFFF" bordercolorlight="#FFFFFF" bordercolordark="#FFFFFF" align="center" height="19"></td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">8</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="41">7</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="39">6</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">5</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">4</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">3</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">2</td>
+      <td bgcolor="#66FFFF" align="center" height="19" width="40">1</td>
+    </tr>
+  </tbody></table>
+  </center>
+</div>
+<p>Any key press will result in the corresponding bit in the byte being driven
+high. In I2C mode these bytes are available for reading from registers one and
+two.<br>
+In serial mode, just send 16 to the LCD02 and it will reply with
+the two bytes as above with the low byte first.</p>
+
+
+
+</body></html>
