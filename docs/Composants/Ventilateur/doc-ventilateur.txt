@@ -1,0 +1,4 @@
+La SAM4S supporte en sortie 3,6v.
+Les ventilateurs standards que l'on trouve dans le commerce sont en général des 5V ou plus.
+On a donc décidé de réaliser les manipulations grâce à un oscillateur  qui traduit parfaitement les sorties que l'on réalise. 
+
