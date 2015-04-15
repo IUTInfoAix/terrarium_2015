@@ -24,40 +24,15 @@ NB: Voir pwm.c dans le même dossier
 */
 
 #include "ServoMoteur.h"
-#include <stdio.h>
-
 int (*my_pwm)();
-int (*my_boardInitialize)();
-int (*start)();
 
 void initializeServomoteur( int (*Mouvement)(int positionAngulaire)){
     my_pwm  = Mouvement;
-
 }
 
-
-
-
-int bigPwm( int positionAngulaire){
-    // truc(s) du style my_boardInitialize avec paramètres
-    int fic;
-    fic = BoardInitialize(50,positionAngulaire,30); 
-    if(fic > 0)
-        intstart = start(fic);
-        if(intstart > 0)
-            return 0;
-        else
-            return -2;
-    else 
-        return -1;
-
-}
-
-void initializeServomoteurSplit(int (*BoardInitialize)(int frontMontant, int pulseTime,  int duration ), 
-    int (*start(int devpath))){
-    my_pwm = bigPwm;   // fonction générale qui va appeler BoardInitialize, vérifier le retour, si ok start(), vérifier retour et retour général.
-    my_boardInitialize = BoardInitialize;
-    my_start =  start;
+void initializeServomoteurSplit(int (*BoardInitialize)(int frontMontant, int pulseTime, int countPulse ), int (*start()))
+{
+    
 }
 
 
