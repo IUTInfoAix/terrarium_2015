@@ -28,7 +28,7 @@ NB: Voir pwm.c dans le même dossier
 
 int (*my_pwm)();
 int (*my_boardInitialize)();
-int (*my_start)();
+int (*start)();
 
 void initializeServomoteur( int (*Mouvement)(int positionAngulaire)){
     my_pwm  = Mouvement;
@@ -43,7 +43,6 @@ int bigPwm( int positionAngulaire){
     int fic;
     fic = BoardInitialize(50,positionAngulaire,30); 
     if(fic > 0)
-        int intstart;
         intstart = start(fic);
         if(intstart > 0)
             return 0;
@@ -55,7 +54,7 @@ int bigPwm( int positionAngulaire){
 }
 
 void initializeServomoteurSplit(int (*BoardInitialize)(int frontMontant, int pulseTime,  int duration ), 
-    int (*start)(int devpath))){
+    int (*start(int devpath))){
     my_pwm = bigPwm;   // fonction générale qui va appeler BoardInitialize, vérifier le retour, si ok start(), vérifier retour et retour général.
     my_boardInitialize = BoardInitialize;
     my_start =  start;
