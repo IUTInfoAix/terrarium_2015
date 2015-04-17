@@ -223,15 +223,35 @@ static void parse_args(FAR struct adc_state_s *adc, int argc, FAR char **argv)
  * Public Functions
  ****************************************************************************/
 
-/****************************************************************************
- * Name: adc_main
- ****************************************************************************/
+double BitToTens(int bit) 
+{
+  return bit * 3.6 / 4096;
+}
 
-#ifdef CONFIG_BUILD_KERNEL
-int main(int argc, FAR char *argv[])
-#else
-int adc_main(int argc, char *argv[])
-#endif
+double TensToIntens (double Tens) 
+{
+  return Tens / 0.0072;
+}
+
+double IntensToLx (double Intens)
+{
+  return Intens * 2;
+}
+
+double BitToLx (int bit)
+{
+  if (bit < 0 || bit > 4095) return -1;
+  return IntensToLx(TensToIntens(BitToTens(bit)));
+}
+
+double Luminance()
+{
+    int nombre = my_ConvertADC(g_adcstate.devpath, O_RDONLY, 0);
+    return BitToLx(nombre);
+}
+
+
+int my_ConvertADC (char * filename, int access, int permission) 
 {
   struct adc_msg_s sample[CONFIG_EXAMPLES_ADC_GROUPSIZE];
   size_t readsize;
@@ -355,26 +375,24 @@ int adc_main(int argc, char *argv[])
 
     else
       {
-        int nsamples = nbytes / sizeof(struct adc_msg_s);
-        if (nsamples * sizeof(struct adc_msg_s) != nbytes)
-          {
-            printf("adc_main: read size=%ld is not a multiple of sample size=%d, Ignoring\n",
-                   (long)nbytes, sizeof(struct adc_msg_s));
-          }
-        else
-          {
-            printf("Sample:\n");
-            for (i = 0; i < nsamples ; i++)
-              {
-                printf("%d: channel: %d value: %d\n",
-                        i+1, sample[i].am_channel, sample[i].am_data);
-              }
-          }
+        return nbytes;
       }
   }
 
   close(fd);
-  return OK;
+}
+
+/****************************************************************************
+ * Name: adc_main
+ ****************************************************************************/
+
+#ifdef CONFIG_BUILD_KERNEL
+int main(int argc, FAR char *argv[])
+#else
+int adc_main(int argc, char *argv[])
+#endif
+{
+return OK;
 
   /* Error exits */
 

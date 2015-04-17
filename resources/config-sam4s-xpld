@@ -17,6 +17,7 @@ CONFIG_HOST_LINUX=y
 # Build Configuration
 #
 CONFIG_APPS_DIR="$HOME/projects/terrarium_2015/myapp"
+#CONFIG_APPS_DIR="$HOME/Bureau/projects/terrarium_2015/myapp"
 CONFIG_BUILD_FLAT=y
 # CONFIG_BUILD_2PASS is not set
 
