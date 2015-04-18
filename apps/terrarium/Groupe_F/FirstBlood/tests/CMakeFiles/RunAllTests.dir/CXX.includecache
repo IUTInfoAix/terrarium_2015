@@ -1,0 +1,12 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jordan/Documents/iut/git/FirstBlood/tests/RunAllTests.cpp
+CppUTest/CommandLineTestRunner.h
+/home/jordan/Documents/iut/git/FirstBlood/tests/CppUTest/CommandLineTestRunner.h
+

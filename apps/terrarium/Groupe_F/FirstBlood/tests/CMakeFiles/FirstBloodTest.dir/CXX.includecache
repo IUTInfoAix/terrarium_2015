@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jordan/Documents/iut/git/FirstBlood/tests/FirstBlood/FirstBloodTest.cpp
+CppUTest/TestHarness.h
+/home/jordan/Documents/iut/git/FirstBlood/tests/FirstBlood/CppUTest/TestHarness.h
+FirstBlood.h
+/home/jordan/Documents/iut/git/FirstBlood/tests/FirstBlood/FirstBlood.h
+
+tests/../include/FirstBlood/FirstBlood.h
+

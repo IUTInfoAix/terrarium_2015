@@ -1,0 +1,3 @@
+/home/jordan/git/FirstBlood/tests/CMakeFiles/FirstBloodTest.dir
+/home/jordan/git/FirstBlood/tests/CMakeFiles/MocSdcardStart.dir
+/home/jordan/git/FirstBlood/tests/CMakeFiles/RunAllTests.dir

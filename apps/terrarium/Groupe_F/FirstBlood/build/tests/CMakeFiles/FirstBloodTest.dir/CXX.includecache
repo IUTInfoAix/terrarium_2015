@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../tests/../include/FirstBlood/FirstBlood.h
+define_sdcard.h
+../tests/../include/FirstBlood/define_sdcard.h
+moc_sdcard_start.h
+../tests/../include/FirstBlood/moc_sdcard_start.h
+stdio.h
+-
+
+../tests/../include/FirstBlood/define_sdcard.h
+
+../tests/../include/FirstBlood/moc_sdcard_start.h
+define_sdcard.h
+../tests/../include/FirstBlood/define_sdcard.h
+
+/home/jordan/git/terrarium_2015/apps/terrarium/Groupe_F/FirstBlood/tests/FirstBlood/FirstBloodTest.cpp
+CppUTest/TestHarness.h
+/home/jordan/git/terrarium_2015/apps/terrarium/Groupe_F/FirstBlood/tests/FirstBlood/CppUTest/TestHarness.h
+FirstBlood.h
+/home/jordan/git/terrarium_2015/apps/terrarium/Groupe_F/FirstBlood/tests/FirstBlood/FirstBlood.h
+moc_sdcard_start.h
+/home/jordan/git/terrarium_2015/apps/terrarium/Groupe_F/FirstBlood/tests/FirstBlood/moc_sdcard_start.h
+

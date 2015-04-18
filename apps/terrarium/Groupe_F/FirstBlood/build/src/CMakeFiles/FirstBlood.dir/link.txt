@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../lib/libFirstBlood.a  CMakeFiles/FirstBlood.dir/FirstBlood/FirstBlood.c.o CMakeFiles/FirstBlood.dir/FirstBlood/moc_sdcard_start.c.o
+/usr/bin/ranlib ../lib/libFirstBlood.a

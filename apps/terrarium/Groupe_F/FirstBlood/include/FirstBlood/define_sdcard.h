@@ -1,0 +1,13 @@
+#ifndef DEFINE_SDCARD
+#define DEFINE_SDCARD
+
+#define SDCARD_OK 0
+#define SDCARD_ERROR_ARGS 1
+#define SDCARD_ERROR_SLOT 2
+#define SDCARD_ERROR_OPEN_FILE 3
+
+#define SDCARD_DEBUG 100;
+
+#define SDCARD_MAX_SLOT 2
+
+#endif
