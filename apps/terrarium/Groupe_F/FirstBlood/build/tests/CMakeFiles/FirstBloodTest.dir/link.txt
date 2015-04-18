@@ -1,2 +1,0 @@
-/usr/bin/ar cr ../lib/libFirstBloodTest.a  CMakeFiles/FirstBloodTest.dir/FirstBlood/FirstBloodTest.cpp.o
-/usr/bin/ranlib ../lib/libFirstBloodTest.a
