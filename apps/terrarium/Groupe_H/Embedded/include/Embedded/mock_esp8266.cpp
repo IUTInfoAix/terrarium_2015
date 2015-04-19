@@ -63,7 +63,7 @@ int mock_esp8266::mock_close(int fd){
 }
 
 // Mock de READ
-ssize_t mock_esp8266::mock_read(int fd, void *buf, size_t nbytes){
+int mock_esp8266::mock_read(int fd, void *buf, size_t nbytes){
 	
 	if(mock_esp8266::fd == fd){	
 		if (nbytes <= lastResponse.size()){
@@ -82,7 +82,7 @@ ssize_t mock_esp8266::mock_read(int fd, void *buf, size_t nbytes){
 }
 
 // Mock de WRITE
-ssize_t mock_esp8266::mock_write(int fd, const void *buf, size_t nbytes){
+int mock_esp8266::mock_write(int fd, const void *buf, size_t nbytes){
 	
 	if((mock_esp8266::fd == fd) && (sizeof(buf)!=0)){	
 		mock_esp8266::mock_classification(&buf, nbytes);
