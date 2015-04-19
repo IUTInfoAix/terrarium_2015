@@ -23,7 +23,7 @@ namespace mock_esp8266 {
 	std::string ssid;
 	std::string pwd = "";
 	bool APJoined = false;
-	void* lastResponse;
+	std::string lastResponse;
 
 	// Creation de points d'accès wifi virtuels
 	// map < ssid, password >

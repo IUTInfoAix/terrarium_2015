@@ -33,6 +33,7 @@ int mock_esp8266::mock_open(const char *path, int oflag){
 		mock_esp8266::fd = -1;
 		return -1;
 	}
+
 }
 
 // Mock de CLOSE
@@ -50,8 +51,15 @@ int mock_esp8266::mock_close(int fd){
 // Mock de READ
 ssize_t mock_esp8266::mock_read(int fd, void *buf, size_t nbytes){
 	
-	if((mock_esp8266::fd == fd) && (sizeof(buf)!=0)){	
-		return  nbytes;
+	if(mock_esp8266::fd == fd){	
+		if (nbytes <= lastResponse.size()){
+			buf = (char *) lastResponse.c_str();
+			return  nbytes;
+		}else{
+			buf = (char*) lastResponse.substr(0,nbytes-1).c_str();
+			return nbytes;
+		}
+			
 	}else{
 		printf("Read failed ! %s\n", strerror(errno));
 		return -1;
@@ -108,6 +116,9 @@ void mock_esp8266::mock_testCmdProcess(string instr){
 	if( instr == "CWMODE" ){
 		response = "OK";	
 	}
+	
+	mock_esp8266::lastResponse = response;
+
 }
 
 // Processing du type "Query Command"
@@ -124,6 +135,8 @@ void mock_esp8266::mock_queryCmdProcess(string instr){
 		if ( !mock_esp8266::APJoined )
 			response = "OK";
 	}
+
+	mock_esp8266::lastResponse = response;
 }
 
 // Processing du type "Set Command"
@@ -140,6 +153,9 @@ void mock_esp8266::mock_setCmdProcess(string instr){
 		mock_esp8266::ssid = instr.substr(0,instr.find(",")-1);
 		mock_esp8266::ssid = instr.substr(instr.find(",")+1, instr.size()-1);
 	}
+
+
+	mock_esp8266::lastResponse =  response;
 }
 
 // Processing du type "Run"
@@ -158,6 +174,7 @@ void mock_esp8266::mock_runProcess(string instr){
 		}
 	}
 
+	mock_esp8266::lastResponse =  response;
 }
 
 
