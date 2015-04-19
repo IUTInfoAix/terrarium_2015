@@ -1,5 +1,5 @@
 /*
-* authors: Thomas Margier, Alexis Eutrope, Mathieu Mérino
+* authors: Thomas Margier, Alexis Eutrope, Mathieu MÃ©rino
 * date   : 3 april 2015
 * brief  : functions to use the esp8266 module
 */
@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <string.h>	//strlen
 #include <stdio.h>	//scanf
+#include <stdlib.h>	//atoi
 
 
 	int		(*my_open)(const char *, int) = 0;
@@ -30,7 +31,7 @@
 */
 void wifi_list()
 {
-	//Envoie de la commande pour récuperer la liste des points wifi
+	//Envoie de la commande pour rÃ©cuperer la liste des points wifi
 	char *str = "AT+CWLAP";
 	int fd = my_open("/dev/ttyS0", 0);
 	my_write(fd, str, strlen(str));
@@ -43,7 +44,7 @@ void wifi_list()
 			printf("No access point available \n");
 			break;
 		}
-		if (str == "OK") break;
+		if (0 == strcmp(str, "OK")) break;
 		printf("%s \n", str);
 	}
 	my_close(fd);
@@ -67,12 +68,12 @@ int wifi_connect(char* name, char* pass)
 	my_write(fd, str, strlen(str));
 	my_close(fd);
 
-	if (str == "OK") 
+	if (0 == strcmp (str, "OK")) 
 	{
 		printf("Connected to: %s \n", name);
 		return 0;
 	}
-	else (str != "OK")
+	else
 	{
 		printf("Connection failed to: %s \n", name);
 		return 1;
@@ -93,12 +94,12 @@ int wifi_disconnect()
 	int fd = my_open("/dev/ttyS0", 0);
 	my_write(fd, str, strlen(str));
 	my_close(fd);
-	if (str == "OK") 
+	if (0 == strcmp (str, "OK")) 
 	{
 		printf("Disconnected");
 		return 0;
 	}
-	else ()
+	else
 	{
 		printf("Disconnection failed");
 		return 1;
@@ -126,7 +127,9 @@ int tcp_connect(char* type, char* addr, int port)
 	strcat(str, "\", \"");
 	strcat(str, addr);
 	strcat(str, "\", \"");
-	strcat(str, port);
+	char *temp;
+	sprintf(temp, "%d", port);
+	strcat(str, temp);
 
 	my_write(fd, str, strlen(str));
 
@@ -177,10 +180,10 @@ void tcp_status()
 	char * str = "AT+CIPSTATUS";
 	int fd = my_open("/dev/ttyS0", 0);
 	my_write(fd, str, strlen(str));
-	while (true)
+	while (1)
 	{
-		read(fd, str, 256);
-		if (str == "OK") break;
+		my_read(fd, str, 256);
+		if (0 == strcmp(str, "OK")) break;
 		printf("%s \n", str);
 	}
 
@@ -199,35 +202,35 @@ void tcp_status()
 */
 void esp8266(int argc, char **argv)
 {
-	if (argv[1] == "list")
+	if (0 == strcmp(argv[1],"list"))
 	{
 		wifi_list();
 	}
-	else if (argv[1] == "connect")
+	else if (0 == strcmp (argv[1],"connect"))
 	{
 		if (argc < 4) printf("usage: esp8266 connect <wifi_ssid>\n");
 		else wifi_connect(argv[2], argv[3]);
 	}
-	else if (argv[1] == "disconnect")
+	else if (0 == strcmp (argv[1],"disconnect"))
 	{
 		wifi_disconnect();
 	}
-	else if (argv[1] == "tcpconnect")
+	else if (0 == strcmp (argv[1],"tcpconnect"))
 	{
 		if (argc < 5) printf("usage: esp8266 connect <type> <address> <port>\n");
-		else tcp_connect(argv[2], argv[3], argv[4]);
+		else tcp_connect(argv[2], argv[3], atoi(argv[4]));
 	}
-	else if (argv[1] == "tcpdisconnect")
+	else if (0 == strcmp (argv[1],"tcpdisconnect"))
 	{
 		tcp_disconnect();
 	}
-	else if (argv[1] == "tcpstatus")
+	else if (0 == strcmp (argv[1],"tcpstatus"))
 	{
 		tcp_status();
 	}
-	else if (argv[1] == "help")
+	else if (0 == strcmp (argv[1],"help"))
 	{
-		print("connect \t disconnect \t list \n tcpconnect \t tcpdisconnect \t tcpstatus");
+		printf("connect \t disconnect \t list \n tcpconnect \t tcpdisconnect \t tcpstatus");
 	}
 	else
 	{

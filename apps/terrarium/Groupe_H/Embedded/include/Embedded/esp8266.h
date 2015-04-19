@@ -1,12 +1,11 @@
+#ifndef __ESP8266_H__
+#define __ESP8266_H__
 
-#ifndef ESP8266_H
-#define ESP8266_H
+//#include <nuttx/config.h>
 
-#include <nuttx/config.h>
-
-#if defined(CONFIG_NSH_BUILTIN_APPS) && !defined(CONFIG_EXAMPLES_CAN_NMSGS)
-#  define CONFIG_EXAMPLES_CAN_NMSGS 32
-#endif
+//#if defined(CONFIG_NSH_BUILTIN_APPS) && !defined(CONFIG_EXAMPLES_CAN_NMSGS)
+//#  define CONFIG_EXAMPLES_CAN_NMSGS 32
+//#endif
 
 
 /****************************************************************/
@@ -20,7 +19,7 @@
 * parameters: none
 * example: wifi_list();
 */
-void wifi_list();
+//void wifi_list();
 
 /*
 * function: wifi_connect(char* name, char* pass)
@@ -29,7 +28,7 @@ void wifi_list();
 * parameters: (char*) name, (char*) pass
 * example: wifi_connect("ssid", "password");
 */
-int wifi_connect(char* name, char* pass);
+//int wifi_connect(char* name, char* pass);
 
 
 /*
@@ -39,7 +38,7 @@ int wifi_connect(char* name, char* pass);
 * parameters: none
 * example: wifi_disconnect()
 */
-int wifi_disconnect();
+//int wifi_disconnect();
 
 /****************************************************************/
 /*						TCP FUNCTIONS							*/
@@ -52,7 +51,7 @@ int wifi_disconnect();
 * parameters: char* type, char* addr, int port
 * example: tcp_connect("TCP", "XXX.XXX.XXX.XXX", 2222);
 */
-int tcp_connect(char* type, char* addr, int port);
+//int tcp_connect(char* type, char* addr, int port);
 
 /*
 * function: tcp_disconnect()
@@ -61,7 +60,7 @@ int tcp_connect(char* type, char* addr, int port);
 * parameters: none
 * example: tcp_disconnect();
 */
-int tcp_disconnect();
+//int tcp_disconnect();
 
 
 /*
@@ -71,7 +70,7 @@ int tcp_disconnect();
 * parameters: none
 * example: wifi_status()
 */
-void tcp_status();
+//void tcp_status();
 
 
-#endif /* ESP8266_H */
+#endif /* __ESP8266_H__ */
