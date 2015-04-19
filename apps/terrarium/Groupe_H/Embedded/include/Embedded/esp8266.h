@@ -10,8 +10,8 @@
     extern int my_errno;
     extern int		(*my_open)(const char *, int);
     extern int		(*my_close)(int);
-    extern int		(*my_read)(int , void* , int);
-    extern int		(*my_write)(int, const void*, int);
+    extern int		(*my_read)(int , void* , long unsigned int);
+    extern int		(*my_write)(int, const void*, long unsigned int);
 /****************************************************************/
 /*						WIFI FUNCTIONS							*/
 /****************************************************************/

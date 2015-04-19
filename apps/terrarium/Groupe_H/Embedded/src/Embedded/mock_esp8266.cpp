@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <string>
 #include <string.h>
+#include <sstream>
 
 using namespace std;
 
@@ -164,7 +165,7 @@ void mock_esp8266::mock_setCmdProcess(string instr){
 	if (instr == "CWMODE"){
 
 		int ival;
-		istringstream buffer(val)
+		istringstream buffer(val);
 		buffer >> ival;
 		mock_esp8266::mode = ival;	
 	}else if(instr == "CWJAP"){
