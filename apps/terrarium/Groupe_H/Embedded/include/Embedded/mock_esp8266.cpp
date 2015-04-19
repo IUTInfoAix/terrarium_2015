@@ -22,9 +22,21 @@ int mock_esp8266::mock_open(const char *path, int oflag){
 
 	// Initialisation des APs
 
-	mock_esp8266::APs["ABC"]="abc";
-	
-	
+	//mock_esp8266::APs["ABC"]="abc";
+	APs = new std::string*[mock_esp8266::nAPs];	
+	for (int i = 0; i < mock_esp8266::nAPs; ++i)
+		APs[i] = new std::string[4];
+	APs[0][1]="abc"; // ssid "abc"
+	APs[0][2]="abc"; // passwd "abc"
+	APs[0][3]="1"; // chanel 1
+	APs[0][4]="1"; // Encryption Wep
+
+
+	APs[1][1]="wifi2"; // ssid "wifi2"
+	APs[1][2]="azerty"; // passwd "abc"
+	APs[1][3]="10"; // chanel 1
+	APs[1][4]="2"; // Encryption Wep
+
 	if (strcmp("/dev/ttyS0", path) && (oflag == 0)){
 		mock_esp8266::fd = 32987;
 		return mock_esp8266::fd;
@@ -165,8 +177,10 @@ void mock_esp8266::mock_runProcess(string instr){
 	if (instr == "RST"){
 		response = "OK"; 
 	}else if (instr == "CWJAP"){
-		if( mock_esp8266::APs[mock_esp8266::ssid] == mock_esp8266::pwd){		
-			mock_esp8266::APJoined = true;	
+		for (int i=0; i<mock_esp8266::nAPs -1; ++i){
+			if( mock_esp8266::APs[i][0] == mock_esp8266::ssid)
+				if (mock_esp8266::APs[i][1] == mock_esp8266::pwd)
+					mock_esp8266::APJoined = true;	
 		}
 	}else if (instr == "CWQAP"){
 		if ( mock_esp8266::APJoined ){
