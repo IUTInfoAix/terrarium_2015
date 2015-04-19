@@ -1,6 +1,0 @@
-project (Potter)
-
-include_directories(${PROJECT_SOURCE_DIR}/../include)
-include_directories(${PROJECT_SOURCE_DIR}/../include/Potter/)
-
-add_library(Potter ./Potter/Potter.c)

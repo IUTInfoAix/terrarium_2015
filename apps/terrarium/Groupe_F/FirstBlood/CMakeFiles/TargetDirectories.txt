@@ -1,3 +1,0 @@
-/home/jordan/Documents/iut/git/FirstBlood/src/CMakeFiles/FirstBlood.dir
-/home/jordan/Documents/iut/git/FirstBlood/tests/CMakeFiles/FirstBloodTest.dir
-/home/jordan/Documents/iut/git/FirstBlood/tests/CMakeFiles/RunAllTests.dir

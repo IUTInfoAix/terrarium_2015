@@ -1,2 +1,0 @@
-/usr/bin/ar cr ../lib/libPotterTest.a  CMakeFiles/PotterTest.dir/Potter/PotterTest.cpp.o
-/usr/bin/ranlib ../lib/libPotterTest.a

@@ -1,1 +1,0 @@
-/usr/bin/c++       CMakeFiles/RunAllTests.dir/RunAllTests.o  -o RunAllTests -rdynamic -L/usr/local/lib -L/home/jordan/git/FirstBlood/tests /usr/local/lib/libCppUTest.a libFirstBloodTest.a -lFirstBlood libMocSdcardStart.a 

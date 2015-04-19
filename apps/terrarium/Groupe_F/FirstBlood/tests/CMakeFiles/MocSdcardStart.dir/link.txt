@@ -1,2 +1,0 @@
-/usr/bin/ar cr libMocSdcardStart.a  CMakeFiles/MocSdcardStart.dir/home/jordan/git/FirstBlood/src/FirstBlood/moc_sdcard_start.o
-/usr/bin/ranlib libMocSdcardStart.a
