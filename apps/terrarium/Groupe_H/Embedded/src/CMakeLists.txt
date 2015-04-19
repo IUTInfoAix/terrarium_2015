@@ -5,4 +5,4 @@ include_directories(${PROJECT_SOURCE_DIR}/../include/Embedded/)
 include_directories(${PROJECT_SOURCE_DIR}/../../../../system/zmodem/host/)
 include_directories(${PROJECT_SOURCE_DIR}/../../../../../nuttx/includes)
 
-add_library(Embedded ./Embedded/esp8266.c)
+add_library(Embedded ./Embedded/esp8266.c ./Embedded/mock_esp8266.cpp)
