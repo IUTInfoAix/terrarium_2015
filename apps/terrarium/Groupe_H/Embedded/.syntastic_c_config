@@ -1,1 +1,5 @@
 -Iinclude/Embedded
+-I$ENV{CPPUTEST_HOME}
+-I$ENV{CPPUTEST_HOME}/include
+-I$CPPUTEST_HOME/include
+-I/var/lib/cpputest/include

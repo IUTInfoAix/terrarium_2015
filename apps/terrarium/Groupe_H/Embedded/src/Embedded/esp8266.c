@@ -12,11 +12,11 @@
 #include <stdlib.h>	//atoi
 
 
-	int		(*my_open)(const char *, int) = 0;
-	int		(*my_close)(int) = 0;
-	ssize_t		(*my_read)(int , void* , size_t) = 0;
-	ssize_t		(*my_write)(int, const void*, size_t) = 0;
-
+    int		(*my_open)(const char *, int) = 0;
+    int		(*my_close)(int) = 0;
+    ssize_t	(*my_read)(int , void* , size_t) = 0;
+    ssize_t	(*my_write)(int, const void*, size_t) = 0;
+    int 	my_errno = 0;
 
 /****************************************************************/
 /*						WIFI FUNCTIONS							*/
@@ -33,13 +33,16 @@ void wifi_list()
 {
 	//Envoie de la commande pour récuperer la liste des points wifi
 	char *str = "AT+CWLAP";
+
 	int fd = my_open("/dev/ttyS0", 0);
+
 	my_write(fd, str, strlen(str));
 	
 	str = "";
 	while (1)
 	{
 		my_read(fd, str, 256);
+
 		if (0 == strlen(str)){
 			printf("No access point available \n");
 			break;
@@ -78,6 +81,8 @@ int wifi_connect(char* name, char* pass)
 		printf("Connection failed to: %s \n", name);
 		return 1;
 	}
+	my_close(fd);
+
 }
 
 
@@ -92,8 +97,11 @@ int wifi_disconnect()
 {
 	char *str = "AT+CWQAP";
 	int fd = my_open("/dev/ttyS0", 0);
+
 	my_write(fd, str, strlen(str));
+
 	my_close(fd);
+
 	if (0 == strcmp (str, "OK")) 
 	{
 		printf("Disconnected");
@@ -104,6 +112,9 @@ int wifi_disconnect()
 		printf("Disconnection failed");
 		return 1;
 	}
+
+	my_close(fd);
+
 }
 
 /****************************************************************/
@@ -121,7 +132,9 @@ int tcp_connect(char* type, char* addr, int port)
 {
 	char *nbConnections = "AT+CIPMUX=0";
 	int fd = my_open("/dev/ttyS0", 0);
+
 	my_write(fd, nbConnections, strlen(nbConnections));
+
 	char *str = "AT+CIPSTART=\"";
 	strcat(str, type);
 	strcat(str, "\", \"");

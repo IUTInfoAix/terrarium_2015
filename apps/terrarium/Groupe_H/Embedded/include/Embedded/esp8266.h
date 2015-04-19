@@ -7,7 +7,11 @@
 //#  define CONFIG_EXAMPLES_CAN_NMSGS 32
 //#endif
 
-
+    extern int my_errno;
+    extern int		(*my_open)(const char *, int);
+    extern int		(*my_close)(int);
+    extern ssize_t	(*my_read)(int , void* , size_t);
+    extern ssize_t	(*my_write)(int, const void*, size_t);
 /****************************************************************/
 /*						WIFI FUNCTIONS							*/
 /****************************************************************/
@@ -19,7 +23,7 @@
 * parameters: none
 * example: wifi_list();
 */
-//void wifi_list();
+void wifi_list();
 
 /*
 * function: wifi_connect(char* name, char* pass)
@@ -28,7 +32,7 @@
 * parameters: (char*) name, (char*) pass
 * example: wifi_connect("ssid", "password");
 */
-//int wifi_connect(char* name, char* pass);
+int wifi_connect(char* name, char* pass);
 
 
 /*
@@ -38,7 +42,7 @@
 * parameters: none
 * example: wifi_disconnect()
 */
-//int wifi_disconnect();
+int wifi_disconnect();
 
 /****************************************************************/
 /*						TCP FUNCTIONS							*/
@@ -51,7 +55,7 @@
 * parameters: char* type, char* addr, int port
 * example: tcp_connect("TCP", "XXX.XXX.XXX.XXX", 2222);
 */
-//int tcp_connect(char* type, char* addr, int port);
+int tcp_connect(char* type, char* addr, int port);
 
 /*
 * function: tcp_disconnect()
@@ -60,7 +64,7 @@
 * parameters: none
 * example: tcp_disconnect();
 */
-//int tcp_disconnect();
+int tcp_disconnect();
 
 
 /*
@@ -70,7 +74,5 @@
 * parameters: none
 * example: wifi_status()
 */
-//void tcp_status();
-
-
+void tcp_status();
 #endif /* __ESP8266_H__ */
