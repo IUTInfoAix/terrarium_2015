@@ -162,7 +162,11 @@ void mock_esp8266::mock_setCmdProcess(string instr){
 	string response;
 
 	if (instr == "CWMODE"){
-		mock_esp8266::mode = atoi(val.c_str());	
+
+		int ival;
+		istringstream buffer(val)
+		buffer >> ival;
+		mock_esp8266::mode = ival;	
 	}else if(instr == "CWJAP"){
 		mock_esp8266::ssid = instr.substr(0,instr.find(",")-1);
 		mock_esp8266::ssid = instr.substr(instr.find(",")+1, instr.size()-1);
