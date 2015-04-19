@@ -12,7 +12,7 @@ add_library(imp_cpputest STATIC IMPORTED)
 set_property(TARGET imp_cpputest PROPERTY
              IMPORTED_LOCATION $ENV{CPPUTEST_HOME}/libCppUTest.a)
 
-add_library(EmbarqTest ./Embarq/EmbarqTest.cpp)
+add_library(EmbarqTest ./Embarq/EmbarqTest.cpp) 
 
 add_executable(RunAllTests RunAllTests.cpp)
 target_link_libraries(RunAllTests imp_cpputest EmbarqTest Embarq)
