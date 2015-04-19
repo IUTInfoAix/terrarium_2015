@@ -10,8 +10,8 @@
     extern int my_errno;
     extern int		(*my_open)(const char *, int);
     extern int		(*my_close)(int);
-    extern ssize_t	(*my_read)(int , void* , size_t);
-    extern ssize_t	(*my_write)(int, const void*, size_t);
+    extern int		(*my_read)(int , void* , int);
+    extern int		(*my_write)(int, const void*, int);
 /****************************************************************/
 /*						WIFI FUNCTIONS							*/
 /****************************************************************/

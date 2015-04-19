@@ -12,11 +12,11 @@
 #include <stdlib.h>	//atoi
 
 
-    int		(*my_open)(const char *, int) = 0;
-    int		(*my_close)(int) = 0;
-    ssize_t	(*my_read)(int , void* , size_t) = 0;
-    ssize_t	(*my_write)(int, const void*, size_t) = 0;
-    int 	my_errno = 0;
+    //my_open = 0;
+    //my_close = 0;
+    //my_read  = 0;
+    //my_write = 0;
+    //my_errno = 0;
 
 /****************************************************************/
 /*						WIFI FUNCTIONS							*/
