@@ -10,7 +10,8 @@
 #include <sys/types.h>
 #include <string.h>
 #include <string>
-#include <vector>
+
+
 // Mock de esp8266
 namespace mock_esp8266 {
 
@@ -28,10 +29,9 @@ namespace mock_esp8266 {
 	bool APJoined = false;
 	std::string lastResponse;
 
+	// Creation de points d'accès wifi virtuels	
 	std::string** APs;
-	// Creation de points d'accès wifi virtuels
-	// map < ssid, password >
-	//std::map < std::string, std::vector<std::string> > APs;
+	
 	int nAPs = 2;
 
 	int 	mock_open(const char *path, int oflag);

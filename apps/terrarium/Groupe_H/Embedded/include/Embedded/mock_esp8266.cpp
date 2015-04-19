@@ -22,7 +22,6 @@ int mock_esp8266::mock_open(const char *path, int oflag){
 
 	// Initialisation des APs
 
-	//mock_esp8266::APs["ABC"]="abc";
 	APs = new std::string*[mock_esp8266::nAPs];	
 	for (int i = 0; i < mock_esp8266::nAPs; ++i)
 		APs[i] = new std::string[4];
@@ -36,6 +35,9 @@ int mock_esp8266::mock_open(const char *path, int oflag){
 	APs[1][2]="azerty"; // passwd "abc"
 	APs[1][3]="10"; // chanel 1
 	APs[1][4]="2"; // Encryption Wep
+
+
+
 
 	if (strcmp("/dev/ttyS0", path) && (oflag == 0)){
 		mock_esp8266::fd = 32987;
