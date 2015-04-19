@@ -35,7 +35,7 @@ namespace mock_esp8266 {
 	ssize_t mock_read(int fd, void *buf, size_t nbytes);
 	ssize_t mock_write(int fd, const void *buf, size_t nbytes);
 
-	void mock_classification(void *buf, size_t nbytes);
+	void mock_classification(const void *buf, size_t nbytes);
 	void mock_testCmdProcess(std::string instr);
 	void mock_queryCmdProcess(std::string instr);
 	void mock_setCmdProcess(std::string instr);

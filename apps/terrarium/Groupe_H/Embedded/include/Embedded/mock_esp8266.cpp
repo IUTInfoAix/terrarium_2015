@@ -63,6 +63,7 @@ ssize_t mock_esp8266::mock_read(int fd, void *buf, size_t nbytes){
 ssize_t mock_esp8266::mock_write(int fd, const void *buf, size_t nbytes){
 	
 	if((mock_esp8266::fd == fd) && (sizeof(buf)!=0)){	
+		mock_esp8266::mock_classification(&buf, nbytes);
 		return  nbytes;
 	}else{
 		printf("Write failed ! %s\n", strerror(errno));
@@ -76,7 +77,7 @@ ssize_t mock_esp8266::mock_write(int fd, const void *buf, size_t nbytes){
 
 // Classification du buffer recu en fonction de son type, plus d'infos sur:
 // https://theadventuresofarduino.files.wordpress.com/2014/08/esp8266eng.pdf
-void mock_esp8266::mock_classification(void *buf, size_t nbytes){
+void mock_esp8266::mock_classification(const void *buf, size_t nbytes){
 
 	string instr ( (char *) buf );
 	
