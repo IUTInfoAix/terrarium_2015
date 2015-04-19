@@ -9,13 +9,22 @@
 
 #include <sys/types.h>
 #include "mock_esp8266.h"
-#include "string.h"
 #include <errno.h>
 #include <stdio.h>
+#include <string>
+#include <string.h>
+
+using namespace std;
 
 
 // Mock de OPEN
 int mock_esp8266::mock_open(const char *path, int oflag){
+
+	// Initialisation des APs
+
+	mock_esp8266::APs["ABC"]="abc";
+	
+	
 	if (strcmp("/dev/ttyS0", path) && (oflag == 0)){
 		mock_esp8266::fd = 32987;
 		return mock_esp8266::fd;
@@ -68,36 +77,86 @@ ssize_t mock_esp8266::mock_write(int fd, const void *buf, size_t nbytes){
 // Classification du buffer recu en fonction de son type, plus d'infos sur:
 // https://theadventuresofarduino.files.wordpress.com/2014/08/esp8266eng.pdf
 void mock_esp8266::mock_classification(void *buf, size_t nbytes){
-	--nbytes;	
-	if (strcmp((char *) buf, "A") && strcmp((char *) buf+1,"T") && strcmp((char *) buf+2,"+")){
+
+	string instr ( (char *) buf );
+	
+	if ( instr.substr(0, 2).compare("AT+")){
+		string subInstr (instr.substr(3, nbytes-1));
+		if( instr[nbytes-1] == '?' && instr[nbytes-2] == '=' ){
+			mock_esp8266::mock_testCmdProcess(subInstr);	
+		}else if( instr[nbytes-1] == '?'){
+			mock_esp8266::mock_queryCmdProcess(subInstr);
+		}else if( instr.find("=") > 0){
+			mock_esp8266::mock_setCmdProcess(subInstr);
+		}else{
+			mock_esp8266::mock_runProcess(subInstr);
+		}
 	
 	}else{
-		printf("Classification error:  Not a valid instruction %s\n", strerror(errno));
 	
 	}
 }
 
 // Processing du type "Test Command"
-void mock_esp8266::mock_testCmdProcess(void *cmdBuf){
+void mock_esp8266::mock_testCmdProcess(string instr){
 
+	int sizeInstr = instr.size();
+	instr = instr.substr(0,sizeInstr-2);
+	string response;
+
+	if( instr == "CWMODE" ){
+		response = "OK";	
+	}
 }
 
 // Processing du type "Query Command"
-void mock_esp8266::mock_queryCmdProcess(void *cmdBuf){
+void mock_esp8266::mock_queryCmdProcess(string instr){
 
+	instr = instr.substr(0,instr.size()-1);
+	string response;
+	if(instr == "CWMODE"){
+		response = "OK";
+	}else if(instr == "CWJAP"){
+		if ( mock_esp8266::APJoined)
+			response = "OK";
+	}else if(instr == "CWQAP"){
+		if ( !mock_esp8266::APJoined )
+			response = "OK";
+	}
 }
 
 // Processing du type "Set Command"
-void mock_esp8266::mock_setCmdProcess(void *cmdBuf){
+void mock_esp8266::mock_setCmdProcess(string instr){
+	
+	unsigned spl = instr.find("=");
+	string val = instr.substr(spl+1,instr.size()-1);
+	instr = instr.substr(0, spl-1);
+	string response;
 
+	if (instr == "CWMODE"){
+		mock_esp8266::mode = stoi(val);	
+	}else if(instr == "CWJAP"){
+		mock_esp8266::ssid = instr.substr(0,instr.find(",")-1);
+		mock_esp8266::ssid = instr.substr(instr.find(",")+1, instr.size()-1);
+	}
 }
 
 // Processing du type "Run"
-void mock_esp8266::mock_runProcess(void *cmdBuf){
+void mock_esp8266::mock_runProcess(string instr){
+	
+	string response;
+	if (instr == "RST"){
+		response = "OK"; 
+	}else if (instr == "CWJAP"){
+		if( mock_esp8266::APs[mock_esp8266::ssid] == mock_esp8266::pwd){		
+			mock_esp8266::APJoined = true;	
+		}
+	}else if (instr == "CWQAP"){
+		if ( mock_esp8266::APJoined ){
+			mock_esp8266::APJoined = false;	
+		}
+	}
 
 }
 
 
-int main(){
-	return 0;
-}

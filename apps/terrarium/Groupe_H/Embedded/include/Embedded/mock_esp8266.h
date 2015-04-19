@@ -8,24 +8,38 @@
  */
 
 #include <sys/types.h>
-
+#include <string.h>
+#include <string>
+#include <map>
 // Mock de esp8266
-class mock_esp8266 {
+namespace mock_esp8266 {
 
-	static int fd;
+	int fd;
+	
+	// Settings	
+	std::string addr;
+	int port;
+	int mode;
+	std::string ssid;
+	std::string pwd = "";
+	bool APJoined = false;
+	void* lastResponse;
 
-	public:
-		int 	mock_open(const char *path, int oflag);
-		int     mock_close(int fd);
-		ssize_t mock_read(int fd, void *buf, size_t nbytes);
-		ssize_t mock_write(int fd, const void *buf, size_t nbytes);
+	// Creation de points d'accès wifi virtuels
+	// map < ssid, password >
+	std::map <std::string, std::string> APs;
+	
 
-	private:
-		void mock_classification(void *buf, size_t nbytes);
-		void mock_testCmdProcess(void *cmdBuf);
-		void mock_queryCmdProcess(void *cmdBuf);
-		void mock_setCmdProcess(void *cmdBuf);
-		void mock_runProcess(void *cmdBuf);
+	int 	mock_open(const char *path, int oflag);
+	int     mock_close(int fd);
+	ssize_t mock_read(int fd, void *buf, size_t nbytes);
+	ssize_t mock_write(int fd, const void *buf, size_t nbytes);
+
+	void mock_classification(void *buf, size_t nbytes);
+	void mock_testCmdProcess(std::string instr);
+	void mock_queryCmdProcess(std::string instr);
+	void mock_setCmdProcess(std::string instr);
+	void mock_runProcess(std::string instr);
 
 
 
